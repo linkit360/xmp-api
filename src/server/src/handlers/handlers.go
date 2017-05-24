@@ -1,10 +1,10 @@
 package handlers
 
 import (
-	xmp_api_structs "../../../structs"
-	"../base"
-	"../websocket"
 	log "github.com/Sirupsen/logrus"
+	"github.com/linkit360/xmp-api/src/server/src/base"
+	"github.com/linkit360/xmp-api/src/server/src/websocket"
+	xmp_api_structs "github.com/linkit360/xmp-api/src/structs"
 	"gopkg.in/gin-gonic/gin.v1"
 )
 

@@ -4,7 +4,7 @@ import (
 	"math/rand"
 	"time"
 
-	"../structs"
+	xmp_api_structs "github.com/linkit360/xmp-api/src/structs"
 )
 
 /*

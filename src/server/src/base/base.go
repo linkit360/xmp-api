@@ -5,10 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	xmp_api_structs "../../../structs"
 	log "github.com/Sirupsen/logrus"
-
 	"github.com/linkit360/go-utils/db"
+	xmp_api_structs "github.com/linkit360/xmp-api/src/structs"
 )
 
 var pgsql *sql.DB

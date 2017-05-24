@@ -5,11 +5,11 @@ import (
 	"net/http"
 	"time"
 
-	xmp_api_structs "../../../structs"
-	"../base"
-	"../config"
 	log "github.com/Sirupsen/logrus"
 	"github.com/gorilla/websocket"
+	"github.com/linkit360/xmp-api/src/server/src/base"
+	"github.com/linkit360/xmp-api/src/server/src/config"
+	xmp_api_structs "github.com/linkit360/xmp-api/src/structs"
 )
 
 var lastResetTime int = 0
