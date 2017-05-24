@@ -40,7 +40,7 @@ func runGin() {
 	r.GET("/initialization", handlers.Initialization)
 	r.POST("/aggregate", handlers.Aggregate)
 
-	r.Run(":" + appConfig.Server.HttpPort)
+	r.Run(":" + appConfig.Server.Port)
 	//log.WithField("port", appConfig.Server.HttpPort).Info("service port")
 }
 

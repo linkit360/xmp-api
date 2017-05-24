@@ -11,8 +11,7 @@ import (
 )
 
 type ServerConfig struct {
-	RPCPort  string `default:"50318" yaml:"rpc_port"`
-	HttpPort string `default:"50319" yaml:"http_port"`
+	Port string `default:"40400" yaml:"port"`
 }
 
 type AppConfig struct {
@@ -22,7 +21,7 @@ type AppConfig struct {
 }
 
 func LoadConfig() AppConfig {
-	var envConfigFile string = "/config/acceptor." + EnvString("PROJECT_ENV", "dev") + ".yml"
+	var envConfigFile string = "/config/acceptor." + EnvString("PROJECT_ENV", "development") + ".yml"
 
 	cfg := flag.String("config", envConfigFile, "configuration yml file")
 	flag.Parse()
@@ -45,12 +44,9 @@ func LoadConfig() AppConfig {
 		log.Fatal("app name must be without '-' : it's not a valid metric name")
 	}
 
-	appConfig.Server.RPCPort = EnvString("PORT", appConfig.Server.RPCPort)
-	appConfig.Server.HttpPort = EnvString("METRICS_PORT", appConfig.Server.HttpPort)
-
 	log.WithFields(log.Fields{
 		"prefix": "Config",
-		"ENV":    EnvString("PROJECT_ENV", "dev"),
+		"ENV":    EnvString("PROJECT_ENV", "development"),
 	}).Info("Init Done")
 
 	return appConfig

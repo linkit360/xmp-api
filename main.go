@@ -1,26 +1,49 @@
 package main
 
-//log "github.com/Sirupsen/logrus"
+import (
+	"os"
 
-//acceptorClient "github.com/linkit360/go-acceptor-client"
+	log "github.com/Sirupsen/logrus"
+	"github.com/linkit360/xmp-api/src/client"
+	"github.com/linkit360/xmp-api/src/server"
+)
 
 func main() {
-
 	//for testing client && server
+	arg := os.Args[1:]
 
-	/*
-		cfg := acceptorClient.ClientConfig{
-			Enabled:    true,
-			DSN:        "go:50319",
-			Timeout:    10,
-			InstanceId: "2f4fd741-61ef-45ab-8436-840ce54d6d29",
-		}
+	if len(arg) < 1 {
+		log.Error("No package specified.")
+		return
+	}
 
-		if err := acceptorClient.Init(cfg); err != nil {
-			log.Panic("Cannot init acceptor client", err)
-		}
-		log.Info("Connected")
-	*/
+	if arg[0] == "server" {
+		runServer()
+	}
+
+	if arg[0] == "client" {
+		runClient()
+	}
+}
+
+func runServer() {
+	log.Info("Testing server")
+	xmp_api_server.Init()
+}
+
+func runClient() {
+	log.Info("Testing client")
+	cfg := xmp_api_client.ClientConfig{
+		Enabled:    true,
+		DSN:        "go:40400",
+		Timeout:    10,
+		InstanceId: "2f4fd741-61ef-45ab-8436-840ce54d6d29",
+	}
+
+	if err := xmp_api_client.Init(cfg); err != nil {
+		log.Panic("Cannot init acceptor client", err)
+	}
+	log.Info("Connected")
 
 	/*
 		var resp struct {
@@ -34,8 +57,8 @@ func main() {
 
 		log.Debug(resp.Ok)
 	*/
-	/*
 
+	/*
 		var resp struct {
 			Ok         bool `json:"ok,omitempty"`
 			Status     int  `json:"status,omitempty"`
@@ -50,57 +73,56 @@ func main() {
 		log.Debug(resp.Ok)
 		log.Debug(resp.Status)
 		log.Debug(resp.OperatorId)
+
+		//resp, err := acceptor_client.SendAggregatedData(data2)
+		//if err != nil {
+		//	log.Errorln(err.Error())
+		//}
+
+		//log.Println(resp)
+
+			// Get BL All
+			data, err := acceptorClient.GetBlackListed("cheese")
+			if err != nil {
+				log.Println("Error")
+				log.Fatalln(err.Error())
+			}
+
+			log.Println("DATA")
+			log.Printf("%+v\n", data)
+
+			// Get BL Time
+			data, err = acceptor_client.BlackListGetNew("cheese", "2000-01-01")
+			if err != nil {
+				log.Println("Error")
+				log.Fatalln(err.Error())
+			}
+
+			log.Println("DATA")
+			log.Printf("%+v\n", data)
+
+			// Send Aggregate
+			data2 := []acceptor.Aggregate{
+				acceptor_client.GetRandomAggregate(),
+			}
+
+			//log.Println(data)
+			resp, err := acceptor_client.SendAggregatedData(data2)
+			if err != nil {
+				log.Println("Error")
+				log.Println(err.Error())
+			}
+
+			log.Println(resp)
+
+			data, err := acceptor_client.CampaignsGet("cheese")
+			if err != nil {
+				log.Println("Error")
+				log.Fatalln(err.Error())
+			}
+
+			log.Println("DATA")
+			log.Printf("%+v\n", data)
 	*/
 
-	//resp, err := acceptor_client.SendAggregatedData(data2)
-	//if err != nil {
-	//	log.Errorln(err.Error())
-	//}
-
-	//log.Println(resp)
-
-	/*
-		// Get BL All
-		data, err := acceptorClient.GetBlackListed("cheese")
-		if err != nil {
-			log.Println("Error")
-			log.Fatalln(err.Error())
-		}
-
-		log.Println("DATA")
-		log.Printf("%+v\n", data)
-
-		// Get BL Time
-		data, err = acceptor_client.BlackListGetNew("cheese", "2000-01-01")
-		if err != nil {
-			log.Println("Error")
-			log.Fatalln(err.Error())
-		}
-
-		log.Println("DATA")
-		log.Printf("%+v\n", data)
-
-		// Send Aggregate
-		data2 := []acceptor.Aggregate{
-			acceptor_client.GetRandomAggregate(),
-		}
-
-		//log.Println(data)
-		resp, err := acceptor_client.SendAggregatedData(data2)
-		if err != nil {
-			log.Println("Error")
-			log.Println(err.Error())
-		}
-
-		log.Println(resp)
-
-		data, err := acceptor_client.CampaignsGet("cheese")
-		if err != nil {
-			log.Println("Error")
-			log.Fatalln(err.Error())
-		}
-
-		log.Println("DATA")
-		log.Printf("%+v\n", data)
-	*/
 }
