@@ -1,12 +1,12 @@
-package main
+package xmp_api_server
 
 import (
 	"runtime"
 
-	"acceptor/src/base"
-	"acceptor/src/config"
-	"acceptor/src/handlers"
-	"acceptor/src/websocket"
+	"./src/base"
+	"./src/config"
+	"./src/handlers"
+	"./src/websocket"
 
 	log "github.com/Sirupsen/logrus"
 	prefixed "github.com/x-cray/logrus-prefixed-formatter"
@@ -15,7 +15,7 @@ import (
 
 var appConfig config.AppConfig
 
-func main() {
+func Init() {
 	log.SetFormatter(new(prefixed.TextFormatter))
 
 	nuCPU := runtime.NumCPU()

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
+	xmp_api_structs "../../../structs"
 	log "github.com/Sirupsen/logrus"
-	acceptorStructs "github.com/linkit360/go-acceptor-structs"
 
 	"github.com/linkit360/go-utils/db"
 )
@@ -38,7 +38,7 @@ func GetOptions(instanceId string) (int, int) {
 	return status, operatorId
 }
 
-func SaveRows(rows []acceptorStructs.Aggregate) error {
+func SaveRows(rows []xmp_api_structs.Aggregate) error {
 	var query string = fmt.Sprintf(
 		"INSERT INTO %sreports ("+
 

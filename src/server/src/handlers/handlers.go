@@ -1,11 +1,10 @@
 package handlers
 
 import (
-	"acceptor/src/base"
-	"acceptor/src/websocket"
-
+	xmp_api_structs "../../../structs"
+	"../base"
+	"../websocket"
 	log "github.com/Sirupsen/logrus"
-	acceptorStructs "github.com/linkit360/go-acceptor-structs"
 	"gopkg.in/gin-gonic/gin.v1"
 )
 
@@ -56,7 +55,7 @@ func Aggregate(c *gin.Context) {
 	var instance_id string = c.Query("instance_id")
 	log.Info(instance_id)
 
-	items := []acceptorStructs.Aggregate{}
+	items := []xmp_api_structs.Aggregate{}
 
 	out := gin.H{
 		"ok": true,

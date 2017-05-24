@@ -1,4 +1,4 @@
-package go_acceptor_structs
+package xmp_api_structs
 
 type HandShakeRequest struct {
 	InstanceId string `json:"insance_id,omitempty"` // provider name by instance id

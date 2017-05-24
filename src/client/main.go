@@ -1,4 +1,4 @@
-package rpcclient
+package xmp_api_client
 
 import (
 	"bytes"

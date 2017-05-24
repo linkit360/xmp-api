@@ -1,10 +1,10 @@
-package rpcclient
+package xmp_api_client
 
 import (
 	"math/rand"
 	"time"
 
-	acceptorStructs "github.com/linkit360/go-acceptor-structs"
+	"../structs"
 )
 
 /*
@@ -19,8 +19,8 @@ func SendAggregatedData(data []acceptorStructs.Aggregate) (acceptorStructs.Aggre
 }
 */
 
-func GetRandomAggregate() acceptorStructs.Aggregate {
-	return acceptorStructs.Aggregate{
+func GetRandomAggregate() xmp_api_structs.Aggregate {
+	return xmp_api_structs.Aggregate{
 		ReportAt:             time.Now().UTC().Unix(),
 		CampaignCode:         "290",
 		OperatorCode:         52000,

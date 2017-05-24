@@ -5,12 +5,11 @@ import (
 	"net/http"
 	"time"
 
-	"acceptor/src/base"
-	"acceptor/src/config"
-
+	xmp_api_structs "../../../structs"
+	"../base"
+	"../config"
 	log "github.com/Sirupsen/logrus"
 	"github.com/gorilla/websocket"
-	acceptorStructs "github.com/linkit360/go-acceptor-structs"
 )
 
 var lastResetTime int = 0
@@ -103,7 +102,7 @@ func echo(w http.ResponseWriter, r *http.Request) {
 	*/
 }
 
-func NewReports(rows []acceptorStructs.Aggregate) {
+func NewReports(rows []xmp_api_structs.Aggregate) {
 	for _, row := range rows {
 		log.WithFields(log.Fields{
 			"prefix":                 "WS",
