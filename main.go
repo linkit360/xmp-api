@@ -6,9 +6,13 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/linkit360/xmp-api/src/client"
 	"github.com/linkit360/xmp-api/src/server"
+	"github.com/x-cray/logrus-prefixed-formatter"
 )
 
 func main() {
+	log.SetFormatter(new(prefixed.TextFormatter))
+	log.SetLevel(log.DebugLevel)
+
 	//for testing client && server
 	arg := os.Args[1:]
 

@@ -9,6 +9,7 @@ import (
 	"time"
 
 	log "github.com/Sirupsen/logrus"
+	"github.com/x-cray/logrus-prefixed-formatter"
 )
 
 var client *http.Client
@@ -22,6 +23,7 @@ type ClientConfig struct {
 }
 
 func Init(clientConf ClientConfig) error {
+	log.SetFormatter(new(prefixed.TextFormatter))
 	log.SetLevel(log.DebugLevel)
 
 	config = clientConf

@@ -16,6 +16,7 @@ var appConfig config.AppConfig
 
 func Init() {
 	log.SetFormatter(new(prefixed.TextFormatter))
+	log.SetLevel(log.DebugLevel)
 
 	nuCPU := runtime.NumCPU()
 	runtime.GOMAXPROCS(nuCPU)
@@ -41,43 +42,4 @@ func runGin() {
 	r.POST("/aggregate", handlers.Aggregate)
 
 	r.Run(":" + appConfig.Server.Port)
-	//log.WithField("port", appConfig.Server.HttpPort).Info("service port")
 }
-
-/*
-func runRPC(appConfig config.AppConfig) {
-	l, err := net.Listen("tcp", "0.0.0.0:"+appConfig.Server.RPCPort)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"prefix": "RPC",
-		}).Fatal("netListen ", err.Error())
-	}
-
-	log.WithFields(log.Fields{
-		"prefix": "RPC",
-		"Port":   appConfig.Server.RPCPort,
-	}).Info()
-
-	server := rpc.NewServer()
-	server.RegisterName("Aggregate", &handlers.Aggregate{})
-	server.RegisterName("BlackList", &handlers.BlackList{})
-	server.RegisterName("Campaigns", &handlers.Campaigns{})
-
-	for {
-		if conn, err := l.Accept(); err == nil {
-
-			log.WithFields(log.Fields{
-				"prefix": "RPC",
-				"local":  conn.LocalAddr().String(),
-				"remote": conn.RemoteAddr().String(),
-			}).Info("CONNECT!")
-
-			go server.ServeCodec(jsonrpc.NewServerCodec(conn))
-		} else {
-			log.WithFields(log.Fields{
-				"prefix": "RPC",
-			}).Info("accept", err.Error())
-		}
-	}
-}
-*/
