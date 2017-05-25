@@ -33,6 +33,7 @@ func main() {
 func runServer() {
 	log.Info("Testing server")
 	xmp_api_server.Init()
+	log.Info("Ready")
 }
 
 func runClient() {
@@ -47,86 +48,88 @@ func runClient() {
 	if err := xmp_api_client.Init(cfg); err != nil {
 		log.Panic("Cannot init acceptor client", err)
 	}
-	log.Info("Connected")
+	log.Info("Ready")
+
+	testInitialization()
+	//testAggregate()
+
+	//for {
+	//wait
+	//time.Sleep(1 * time.Minute)
+	//}
 
 	/*
-		var resp struct {
-			Ok bool `json:"ok,omitempty"`
-		}
-
-		err := acceptorClient.Call("aggregate", &resp, acceptorClient.GetRandomAggregate(), acceptorClient.GetRandomAggregate())
+		// Get BL All
+		data, err := acceptorClient.GetBlackListed("cheese")
 		if err != nil {
-			log.Error(err)
+			log.Println("Error")
+			log.Fatalln(err.Error())
 		}
 
-		log.Debug(resp.Ok)
-	*/
+		log.Println("DATA")
+		log.Printf("%+v\n", data)
 
-	/*
-		var resp struct {
-			Ok         bool `json:"ok,omitempty"`
-			Status     int  `json:"status,omitempty"`
-			OperatorId int  `json:"id_operator,omitempty"`
-		}
-
-		err := acceptorClient.Call("initialization", &resp)
+		// Get BL Time
+		data, err = acceptor_client.BlackListGetNew("cheese", "2000-01-01")
 		if err != nil {
-			log.Error(err)
+			log.Println("Error")
+			log.Fatalln(err.Error())
 		}
 
-		log.Debug(resp.Ok)
-		log.Debug(resp.Status)
-		log.Debug(resp.OperatorId)
+		log.Println("DATA")
+		log.Printf("%+v\n", data)
 
-		//resp, err := acceptor_client.SendAggregatedData(data2)
-		//if err != nil {
-		//	log.Errorln(err.Error())
-		//}
+		// Send Aggregate
+		data2 := []acceptor.Aggregate{
+			acceptor_client.GetRandomAggregate(),
+		}
 
-		//log.Println(resp)
+		//log.Println(data)
+		resp, err := acceptor_client.SendAggregatedData(data2)
+		if err != nil {
+			log.Println("Error")
+			log.Println(err.Error())
+		}
 
-			// Get BL All
-			data, err := acceptorClient.GetBlackListed("cheese")
-			if err != nil {
-				log.Println("Error")
-				log.Fatalln(err.Error())
-			}
+		log.Println(resp)
 
-			log.Println("DATA")
-			log.Printf("%+v\n", data)
+		data, err := acceptor_client.CampaignsGet("cheese")
+		if err != nil {
+			log.Println("Error")
+			log.Fatalln(err.Error())
+		}
 
-			// Get BL Time
-			data, err = acceptor_client.BlackListGetNew("cheese", "2000-01-01")
-			if err != nil {
-				log.Println("Error")
-				log.Fatalln(err.Error())
-			}
-
-			log.Println("DATA")
-			log.Printf("%+v\n", data)
-
-			// Send Aggregate
-			data2 := []acceptor.Aggregate{
-				acceptor_client.GetRandomAggregate(),
-			}
-
-			//log.Println(data)
-			resp, err := acceptor_client.SendAggregatedData(data2)
-			if err != nil {
-				log.Println("Error")
-				log.Println(err.Error())
-			}
-
-			log.Println(resp)
-
-			data, err := acceptor_client.CampaignsGet("cheese")
-			if err != nil {
-				log.Println("Error")
-				log.Fatalln(err.Error())
-			}
-
-			log.Println("DATA")
-			log.Printf("%+v\n", data)
+		log.Println("DATA")
+		log.Printf("%+v\n", data)
 	*/
+}
 
+func testAggregate() {
+	var resp struct {
+		Ok bool `json:"ok,omitempty"`
+	}
+
+	err := xmp_api_client.Call("aggregate", &resp, xmp_api_client.GetRandomAggregate())
+	if err != nil {
+		log.Error(err)
+	}
+
+	log.Debug(resp.Ok)
+}
+
+func testInitialization() {
+	var resp struct {
+		Ok         bool `json:"ok,omitempty"`
+		Status     int  `json:"status,omitempty"`
+		OperatorId int  `json:"id_operator,omitempty"`
+	}
+
+	err := xmp_api_client.Call("initialization", &resp)
+	if err != nil {
+		log.Error(err)
+	}
+
+	log.Debug(resp.Ok)
+	log.Debug(resp.Status)
+	log.Debug(resp.OperatorId)
 }

@@ -34,7 +34,7 @@ func Initialization(c *gin.Context) {
 	}
 
 	// remove me
-	Send()
+	Send("2f4fd741-61ef-45ab-8436-840ce54d6d29")
 
 	c.JSON(
 		200,
@@ -43,10 +43,14 @@ func Initialization(c *gin.Context) {
 }
 
 // arg - instance id
-func Send() {
+func Send(instance_id string) {
+	var resp struct {
+		Message string `json:"message,omitempty"`
+	}
 
-	//Clients[instance_id]
+	Call("ping", Clients[instance_id]+":40402", &resp)
 
+	log.Debug(resp.Message)
 }
 
 func Aggregate(c *gin.Context) {

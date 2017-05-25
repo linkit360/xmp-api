@@ -10,6 +10,7 @@ import (
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/x-cray/logrus-prefixed-formatter"
+	"gopkg.in/gin-gonic/gin.v1"
 )
 
 var client *http.Client
@@ -31,13 +32,12 @@ func Init(clientConf ClientConfig) error {
 		Timeout: time.Duration(config.Timeout) * time.Second,
 	}
 
-	//runGin()
+	go runGin()
 	return nil
 }
 
-/*
 func runGin() {
-	//gin.SetMode(gin.ReleaseMode)
+	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 
 	r.GET(
@@ -50,9 +50,8 @@ func runGin() {
 	)
 
 	// use config
-	r.Run(":50318")
+	r.Run(":40402")
 }
-*/
 
 func Call(funcName string, res interface{}, req ...interface{}) error {
 	if !config.Enabled {
