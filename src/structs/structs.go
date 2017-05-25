@@ -4,13 +4,16 @@ type HandShakeRequest struct {
 	InstanceId string `json:"insance_id,omitempty"` // provider name by instance id
 }
 
-type HandShakeResponse struct {
-	Ok        bool                `json:"ok"`                  // false if error, true if ok
-	Error     string              `json:"error,omitempty"`     // error in case of any error
-	BlackList []string            `json:"blacklist,omitempty"` // array of blacklisted numbers
-	Campaigns map[string]Campaign `json:"campaigns,omitempty"` // map by uuid
-	Services  map[string]Service  `json:"services,omitempty"`  // map by uuid
-	Operators map[string]Operator `json:"operators,omitempty"` // map by anything
+type HandShake struct {
+	Ok         bool   `json:"ok"`                    // false if error, true if ok
+	Error      string `json:"error,omitempty"`       // error in case of any error
+	Status     int    `json:"status,omitempty"`      // Instance status
+	ProviderId int    `json:"id_provider,omitempty"` // Provider of Instance
+
+	//BlackList []string            `json:"blacklist,omitempty"` // array of blacklisted numbers
+	//Campaigns map[string]Campaign `json:"campaigns,omitempty"` // map by uuid
+	//Services  map[string]Service  `json:"services,omitempty"`  // map by uuid
+	//Operators map[string]Operator `json:"operators,omitempty"` // map by anything
 }
 
 type Operator struct {

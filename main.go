@@ -6,6 +6,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/linkit360/xmp-api/src/client"
 	"github.com/linkit360/xmp-api/src/server"
+	"github.com/linkit360/xmp-api/src/structs"
 	"github.com/x-cray/logrus-prefixed-formatter"
 )
 
@@ -49,11 +50,11 @@ func runClient() {
 	}
 	log.Info("Ready")
 
-	testAggregate()
+	//testAggregate()
 
 	//for {
 	// instance doing his work (wait)
-	//testInitialization()
+	testInitialization()
 	//time.Sleep(3 * time.Second)
 	//}
 
@@ -117,18 +118,19 @@ func testAggregate() {
 }
 
 func testInitialization() {
-	var resp struct {
-		Ok         bool `json:"ok,omitempty"`
-		Status     int  `json:"status,omitempty"`
-		OperatorId int  `json:"id_operator,omitempty"`
-	}
-
+	var resp xmp_api_structs.HandShake
 	err := xmp_api_client.Call("initialization", &resp)
 	if err != nil {
 		log.Error(err)
 	}
 
-	log.Debug(resp.Ok)
-	log.Debug(resp.Status)
-	log.Debug(resp.OperatorId)
+	log.WithFields(
+		log.Fields{
+			"prefix":   "testInitialization",
+			"ok":       resp.Ok,
+			"error":    resp.Error,
+			"status":   resp.Status,
+			"provider": resp.ProviderId,
+		},
+	).Info("Request Done")
 }

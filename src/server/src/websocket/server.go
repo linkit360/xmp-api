@@ -7,6 +7,7 @@ import (
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/gorilla/websocket"
+	"github.com/linkit360/xmp-api/src/server/src/base"
 	"github.com/linkit360/xmp-api/src/server/src/config"
 	"github.com/linkit360/xmp-api/src/structs"
 	"github.com/x-cray/logrus-prefixed-formatter"
@@ -162,9 +163,8 @@ func resetDay() {
 }
 
 func reset() {
-	//data.Countries, provs, data.LpHits, data.Mo, data.MoSuccess = base.GetWsData()
-	//lastResetTime = time.Now().Day()
-	//fmt.Printf("%+v", provs)
+	data.Countries, provs, data.LpHits, data.Mo, data.MoSuccess = base.GetWsData()
+	lastResetTime = time.Now().Day()
 }
 
 func prepData() string {

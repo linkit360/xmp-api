@@ -36,25 +36,22 @@ func Init() {
 }
 
 func GetOptions(instanceId string) (int, int) {
-	rows, err := db.Raw("SELECT status,id_operator FROM xmp_instances WHERE id = ?", instanceId).Rows()
+	rows, err := db.Raw("SELECT status,id_provider FROM xmp_instances WHERE id = ?", instanceId).Rows()
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer rows.Close()
 
 	var status int
-	var operatorId int
+	var id_provider int
 	for rows.Next() {
 		rows.Scan(
 			&status,
-			&operatorId,
+			&id_provider,
 		)
 	}
 
-	log.Debug(status)
-	log.Debug(operatorId)
-
-	return status, operatorId
+	return status, id_provider
 }
 
 /*

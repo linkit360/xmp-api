@@ -14,33 +14,6 @@ func init() {
 	Clients = make(map[string]string)
 }
 
-func Initialization(c *gin.Context) {
-	log.Info("")
-	log.Info("Call Initialization")
-	var instance_id string = c.Query("instance_id")
-	log.Info(instance_id)
-
-	status, id_operator := base.GetOptions(instance_id)
-	out := gin.H{
-		"ok":     false,
-		"status": status,
-	}
-
-	if status == 1 {
-		Clients[instance_id] = c.ClientIP()
-
-		out["ok"] = true
-		out["id_operator"] = id_operator
-	}
-
-	// remove me
-	//Send("2f4fd741-61ef-45ab-8436-840ce54d6d29")
-
-	c.JSON(
-		200,
-		out,
-	)
-}
 
 func Send(instance_id string) {
 	var resp struct {
