@@ -1,55 +1,54 @@
 package config
 
 import (
-	"flag"
+	"encoding/json"
+	"io/ioutil"
 	"os"
-	"strings"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/jinzhu/configor"
-	"github.com/linkit360/go-utils/db"
+	"github.com/x-cray/logrus-prefixed-formatter"
 )
 
-type ServerConfig struct {
-	Port string `default:"40400" yaml:"port"`
+type DbConfig struct {
+	Host     string `json:"host"`
+	Database string `json:"database"`
+	User     string `json:"user"`
+	Password string `json:"password"`
 }
 
-type AppConfig struct {
-	AppName string            `yaml:"app_name"`
-	Server  ServerConfig      `yaml:"server"`
-	DbConf  db.DataBaseConfig `yaml:"db"`
-}
+func LoadConfig() DbConfig {
+	log.SetFormatter(new(prefixed.TextFormatter))
+	log.SetLevel(log.DebugLevel)
+	var err error
 
-func LoadConfig() AppConfig {
-	var envConfigFile string = "/config/acceptor." + EnvString("PROJECT_ENV", "development") + ".yml"
-
-	cfg := flag.String("config", envConfigFile, "configuration yml file")
-	flag.Parse()
-	var appConfig AppConfig
-	if *cfg != "" {
-		if err := configor.Load(&appConfig, *cfg); err != nil {
-			log.WithFields(log.Fields{
+	var envConfigFile string = "/config/" + EnvString("PROJECT_ENV", "development") + "/db.json"
+	dat, err := ioutil.ReadFile(envConfigFile)
+	if err != nil {
+		log.WithFields(
+			log.Fields{
 				"prefix": "Config",
 				"error":  err.Error(),
-			}).Fatal("Load Error")
-			os.Exit(1)
-		}
+			},
+		).Fatal("Read Error")
 	}
 
-	if appConfig.AppName == "" {
-		log.Fatal("app name must be defiled as <host>-<name>")
-	}
-
-	if strings.Contains(appConfig.AppName, "-") {
-		log.Fatal("app name must be without '-' : it's not a valid metric name")
+	var cfg DbConfig
+	err = json.Unmarshal(dat, &cfg)
+	if err != nil {
+		log.WithFields(
+			log.Fields{
+				"prefix": "Config",
+				"error":  err.Error(),
+			},
+		).Fatal("Load Error")
 	}
 
 	log.WithFields(log.Fields{
 		"prefix": "Config",
-		"ENV":    EnvString("PROJECT_ENV", "development"),
+		"env":    EnvString("PROJECT_ENV", "development"),
 	}).Info("Init Done")
 
-	return appConfig
+	return cfg
 }
 
 func EnvString(env, fallback string) string {

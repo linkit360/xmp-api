@@ -1,29 +1,46 @@
 package base
 
 import (
-	"database/sql"
 	"fmt"
-	"time"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/linkit360/go-utils/db"
-	xmp_api_structs "github.com/linkit360/xmp-api/src/structs"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/linkit360/xmp-api/src/server/src/config"
+	"github.com/x-cray/logrus-prefixed-formatter"
+	"gopkg.in/jinzhu/gorm.v1"
 )
 
-var pgsql *sql.DB
-var config db.DataBaseConfig
+var cfg config.DbConfig
+var db *gorm.DB
 
-func Init(dbConfig db.DataBaseConfig) {
-	config = dbConfig
-	pgsql = db.Init(config)
+func Init() {
+	log.SetFormatter(new(prefixed.TextFormatter))
+	log.SetLevel(log.DebugLevel)
+	var err error
+
+	cfg = config.LoadConfig()
+	db, err = gorm.Open(
+		"postgres",
+		fmt.Sprintf(
+			"host=%s user=%s dbname=%s sslmode=disable password=%s",
+			cfg.Host,
+			cfg.User,
+			cfg.Database,
+			cfg.Password,
+		),
+	)
+
+	if err != nil {
+		log.Panic("Base: Connection Error ", err.Error())
+	}
 }
 
 func GetOptions(instanceId string) (int, int) {
-	//noinspection SqlResolve
-	rows, err := pgsql.Query("SELECT status,id_operator FROM xmp_instances WHERE id = '" + instanceId + "'")
+	rows, err := db.Raw("SELECT status,id_operator FROM xmp_instances WHERE id = ?", instanceId).Rows()
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer rows.Close()
 
 	var status int
 	var operatorId int
@@ -34,9 +51,13 @@ func GetOptions(instanceId string) (int, int) {
 		)
 	}
 
+	log.Debug(status)
+	log.Debug(operatorId)
+
 	return status, operatorId
 }
 
+/*
 func SaveRows(rows []xmp_api_structs.Aggregate) error {
 	var query string = fmt.Sprintf(
 		"INSERT INTO %sreports ("+
@@ -195,6 +216,7 @@ func GetWsData() (map[string]uint64, map[string]string, uint64, uint64, uint64) 
 
 	return countries, provs, LpHits, Mo, MoSuccess
 }
+*/
 
 /*
 func GetBlackList(providerName string, time string) []string {

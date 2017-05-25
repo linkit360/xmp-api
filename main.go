@@ -33,7 +33,6 @@ func main() {
 func runServer() {
 	log.Info("Testing server")
 	xmp_api_server.Init()
-	log.Info("Ready")
 }
 
 func runClient() {
@@ -50,12 +49,12 @@ func runClient() {
 	}
 	log.Info("Ready")
 
-	testInitialization()
 	//testAggregate()
 
 	//for {
-	//wait
-	//time.Sleep(1 * time.Minute)
+	// instance doing his work (wait)
+	testInitialization()
+	//time.Sleep(3 * time.Second)
 	//}
 
 	/*

@@ -3,8 +3,6 @@ package handlers
 import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/linkit360/xmp-api/src/server/src/base"
-	"github.com/linkit360/xmp-api/src/server/src/websocket"
-	xmp_api_structs "github.com/linkit360/xmp-api/src/structs"
 	"gopkg.in/gin-gonic/gin.v1"
 )
 
@@ -34,13 +32,15 @@ func Initialization(c *gin.Context) {
 	}
 
 	// remove me
-	Send("2f4fd741-61ef-45ab-8436-840ce54d6d29")
+	//Send("2f4fd741-61ef-45ab-8436-840ce54d6d29")
 
 	c.JSON(
 		200,
 		out,
 	)
 }
+
+/*
 
 // arg - instance id
 func Send(instance_id string) {
@@ -84,7 +84,6 @@ func Aggregate(c *gin.Context) {
 	)
 }
 
-/*
 type Response struct{}
 
 type Aggregate struct{}

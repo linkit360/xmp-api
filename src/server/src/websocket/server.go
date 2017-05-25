@@ -1,15 +1,9 @@
 package websocket
 
 import (
-	"encoding/json"
 	"net/http"
-	"time"
 
-	log "github.com/Sirupsen/logrus"
 	"github.com/gorilla/websocket"
-	"github.com/linkit360/xmp-api/src/server/src/base"
-	"github.com/linkit360/xmp-api/src/server/src/config"
-	xmp_api_structs "github.com/linkit360/xmp-api/src/structs"
 )
 
 var lastResetTime int = 0
@@ -31,6 +25,7 @@ type Data struct {
 var data = Data{}
 var provs = map[string]string{}
 
+/*
 func Init() {
 	reset()
 	go resetDay()
@@ -83,25 +78,26 @@ func echo(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
+*/
+/*
+	go func() {
+		for range time.Tick(time.Second) {
+			err := c.WriteMessage(websocket.TextMessage, []byte(prepData()))
+			if err != nil {
+				log.WithFields(log.Fields{
+					"prefix": "WS",
+					"error":  err,
+				}).Error("Write")
 
-	/*
-		go func() {
-			for range time.Tick(time.Second) {
-				err := c.WriteMessage(websocket.TextMessage, []byte(prepData()))
-				if err != nil {
-					log.WithFields(log.Fields{
-						"prefix": "WS",
-						"error":  err,
-					}).Error("Write")
-
-					//c.Close()
-					data.ClientsCnt = data.ClientsCnt - 1
-				}
+				//c.Close()
+				data.ClientsCnt = data.ClientsCnt - 1
 			}
-		}()
-	*/
-}
+		}
+	}()
+*/
+//}
 
+/*
 func NewReports(rows []xmp_api_structs.Aggregate) {
 	for _, row := range rows {
 		log.WithFields(log.Fields{
@@ -159,8 +155,8 @@ func resetDay() {
 }
 
 func reset() {
-	data.Countries, provs, data.LpHits, data.Mo, data.MoSuccess = base.GetWsData()
-	lastResetTime = time.Now().Day()
+	//data.Countries, provs, data.LpHits, data.Mo, data.MoSuccess = base.GetWsData()
+	//lastResetTime = time.Now().Day()
 	//fmt.Printf("%+v", provs)
 }
 
@@ -168,3 +164,5 @@ func prepData() string {
 	mapB, _ := json.Marshal(data)
 	return string(mapB)
 }
+
+*/
