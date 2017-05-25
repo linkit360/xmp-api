@@ -49,11 +49,11 @@ func runClient() {
 	}
 	log.Info("Ready")
 
-	//testAggregate()
+	testAggregate()
 
 	//for {
 	// instance doing his work (wait)
-	testInitialization()
+	//testInitialization()
 	//time.Sleep(3 * time.Second)
 	//}
 

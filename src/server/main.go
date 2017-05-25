@@ -6,6 +6,7 @@ import (
 	logr "github.com/Sirupsen/logrus"
 	"github.com/linkit360/xmp-api/src/server/src/base"
 	"github.com/linkit360/xmp-api/src/server/src/handlers"
+	"github.com/linkit360/xmp-api/src/server/src/websocket"
 	prefixed "github.com/x-cray/logrus-prefixed-formatter"
 	"gopkg.in/gin-gonic/gin.v1"
 )
@@ -22,7 +23,7 @@ func Init() {
 	//log.WithField("CPUCount", nuCPU)
 
 	base.Init()
-	//go websocket.Init()
+	go websocket.Init()
 
 	log.Info("Init Done")
 	runGin()
@@ -33,7 +34,7 @@ func runGin() {
 	r := gin.Default()
 
 	r.GET("/initialization", handlers.Initialization)
-	//r.POST("/aggregate", handlers.Aggregate)
+	r.POST("/aggregate", handlers.Aggregate)
 
 	r.Run(":40400")
 }

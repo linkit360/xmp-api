@@ -3,6 +3,8 @@ package handlers
 import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/linkit360/xmp-api/src/server/src/base"
+	"github.com/linkit360/xmp-api/src/server/src/websocket"
+	"github.com/linkit360/xmp-api/src/structs"
 	"gopkg.in/gin-gonic/gin.v1"
 )
 
@@ -40,9 +42,6 @@ func Initialization(c *gin.Context) {
 	)
 }
 
-/*
-
-// arg - instance id
 func Send(instance_id string) {
 	var resp struct {
 		Message string `json:"message,omitempty"`
@@ -66,8 +65,6 @@ func Aggregate(c *gin.Context) {
 	}
 
 	if c.BindJSON(&items) == nil {
-		log.Info(items)
-
 		websocket.NewReports(items)
 		err := base.SaveRows(items)
 		if err != nil {
@@ -84,6 +81,7 @@ func Aggregate(c *gin.Context) {
 	)
 }
 
+/*
 type Response struct{}
 
 type Aggregate struct{}

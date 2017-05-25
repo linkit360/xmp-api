@@ -1,9 +1,15 @@
 package websocket
 
 import (
+	"encoding/json"
 	"net/http"
+	"time"
 
+	log "github.com/Sirupsen/logrus"
 	"github.com/gorilla/websocket"
+	"github.com/linkit360/xmp-api/src/server/src/config"
+	"github.com/linkit360/xmp-api/src/structs"
+	"github.com/x-cray/logrus-prefixed-formatter"
 )
 
 var lastResetTime int = 0
@@ -25,8 +31,10 @@ type Data struct {
 var data = Data{}
 var provs = map[string]string{}
 
-/*
 func Init() {
+	log.SetFormatter(new(prefixed.TextFormatter))
+	log.SetLevel(log.DebugLevel)
+
 	reset()
 	go resetDay()
 
@@ -78,26 +86,25 @@ func echo(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
-*/
-/*
-	go func() {
-		for range time.Tick(time.Second) {
-			err := c.WriteMessage(websocket.TextMessage, []byte(prepData()))
-			if err != nil {
-				log.WithFields(log.Fields{
-					"prefix": "WS",
-					"error":  err,
-				}).Error("Write")
 
-				//c.Close()
-				data.ClientsCnt = data.ClientsCnt - 1
+	/*
+		go func() {
+			for range time.Tick(time.Second) {
+				err := c.WriteMessage(websocket.TextMessage, []byte(prepData()))
+				if err != nil {
+					log.WithFields(log.Fields{
+						"prefix": "WS",
+						"error":  err,
+					}).Error("Write")
+
+					//c.Close()
+					data.ClientsCnt = data.ClientsCnt - 1
+				}
 			}
-		}
-	}()
-*/
-//}
+		}()
+	*/
+}
 
-/*
 func NewReports(rows []xmp_api_structs.Aggregate) {
 	for _, row := range rows {
 		log.WithFields(log.Fields{
@@ -164,5 +171,3 @@ func prepData() string {
 	mapB, _ := json.Marshal(data)
 	return string(mapB)
 }
-
-*/
