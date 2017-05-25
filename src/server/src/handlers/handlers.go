@@ -14,7 +14,6 @@ func init() {
 	Clients = make(map[string]string)
 }
 
-
 func Send(instance_id string) {
 	var resp struct {
 		Message string `json:"message,omitempty"`

@@ -5,14 +5,14 @@ type HandShakeRequest struct {
 }
 
 type HandShake struct {
-	Ok         bool   `json:"ok"`                    // false if error, true if ok
-	Error      string `json:"error,omitempty"`       // error in case of any error
-	Status     int    `json:"status,omitempty"`      // Instance status
-	ProviderId int    `json:"id_provider,omitempty"` // Provider of Instance
+	Ok         bool               `json:"ok"`                    // false if error, true if ok
+	Error      string             `json:"error,omitempty"`       // error in case of any error
+	Status     int                `json:"status,omitempty"`      // Instance status
+	ProviderId int                `json:"id_provider,omitempty"` // Provider of Instance
+	Services   map[string]Service `json:"services,omitempty"`    // Map by uuid
 
 	//BlackList []string            `json:"blacklist,omitempty"` // array of blacklisted numbers
 	//Campaigns map[string]Campaign `json:"campaigns,omitempty"` // map by uuid
-	//Services  map[string]Service  `json:"services,omitempty"`  // map by uuid
 	//Operators map[string]Operator `json:"operators,omitempty"` // map by anything
 }
 
@@ -57,29 +57,6 @@ type Aggregate struct {
 	ExpiredChargeSum       int64  `json:"expired_charge_sum,omitempty"`
 	ExpiredFailed          int64  `json:"expired_failed,omitempty"`
 	Pixels                 int64  `json:"pixels,omitempty"`
-}
-
-type Service struct {
-	Id                  string  `json:"id,omitempty"`            // unique id
-	Code                string  `json:"code,omitempty"`          // previous service id
-	Price               int     `json:"price,omitempty"`         // в целых рублях
-	RetryDays           int     `json:"retry_days,omitempty"`    // for retries - days to keep retries, for periodic - subscription is alive
-	InactiveDays        int     `json:"inactive_days,omitempty"` // days of unsuccessful charge turns subscription into inactive state
-	GraceDays           int     `json:"grace_days,omitempty"`    // days in end of subscription period where always must be charged OK
-	PaidHours           int     `json:"paid_hours,omitempty"`    // rejected rule
-	DelayHours          int     `json:"delay_hours,omitempty"`   // repeat charge delay
-	SMSOnSubscribe      string  `json:"sms_on_unsubscribe,omitempty"`
-	SMSOnCharged        string  `json:"sms_on_charged,omitempty"`
-	SMSOnUnsubscribe    string  `json:"sms_on_subscribe,omitempty"` // if empty, do not send
-	SMSOnContent        string  `json:"sms_on_content,omitempty"`
-	SMSOnRejected       string  `json:"sms_on_rejected,omitempty"`
-	SMSOnBlackListed    string  `json:"sms_on_blacklisted,omitempty"`
-	SMSOnPostPaid       string  `json:"sms_on_postpaid,omitempty"`
-	PeriodicAllowedFrom int     `json:"periodic_allowed_from,omitempty"` // send content in sms allowed from and to times.
-	PeriodicAllowedTo   int     `json:"periodic_allowed_to,omitempty"`
-	PeriodicDays        string  `json:"periodic_days,omitempty"` // days of week to charge subscriber
-	MinimalTouchTimes   int     `json:"minimal_touch_times,omitempty"`
-	ContentIds          []int64 `json:"content_ids,omitempty"`
 }
 
 type Campaign struct {
