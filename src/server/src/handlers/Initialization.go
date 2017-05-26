@@ -13,6 +13,8 @@ func Initialization(c *gin.Context) {
 	var instance_id string = c.Query("instance_id")
 	log.Info(instance_id)
 
+	var err error
+
 	status, id_provider := base.GetOptions(instance_id)
 	out := xmp_api_structs.HandShake{
 		Ok:     false,
@@ -23,9 +25,16 @@ func Initialization(c *gin.Context) {
 	if out.Status == 1 {
 		// save client
 		Clients[instance_id] = c.ClientIP()
+
 		out.Ok = true
 		out.Error = ""
 		out.ProviderId = id_provider
+		out.Services, err = base.GetServices(id_provider)
+		if err != nil {
+			out.Ok = false
+			out.Error = err.Error()
+			out.Services = nil
+		}
 	}
 
 	// remove me

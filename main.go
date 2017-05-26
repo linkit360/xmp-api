@@ -131,6 +131,10 @@ func testInitialization() {
 			"error":    resp.Error,
 			"status":   resp.Status,
 			"provider": resp.ProviderId,
+			"services": len(resp.Services),
 		},
 	).Info("Request Done")
+
+	//log.Info(resp.Services)
+	log.Info("")
 }
