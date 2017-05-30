@@ -28,7 +28,6 @@ func Initialization(c *gin.Context) {
 
 		out.Ok = true
 		out.Error = ""
-		out.ProviderId = id_provider
 		out.Services, err = base.GetServices(id_provider)
 		if err != nil {
 			out.Ok = false
