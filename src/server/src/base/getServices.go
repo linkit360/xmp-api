@@ -15,21 +15,21 @@ func GetServices(id_provider int) (map[string]xmp_api_structs.Service, error) {
 	db.Where("id_provider = ?", id_provider).Find(&data)
 	for _, service := range data {
 		// Provider specific options
-		provOpts := xmp_api_structs.ServiceProvOpts{}
-		err = json.Unmarshal([]byte(service.ServiceOpts), &provOpts)
+		provOpts := xmp_api_structs.ProviderOpts{}
+		err = json.Unmarshal([]byte(service.ServiceOptsJson), &provOpts)
 		if err != nil {
 			return nil, err
 		}
 		service.ProvOpts = append(service.ProvOpts, provOpts)
-		service.ServiceOpts = ""
+		service.ServiceOptsJson = ""
 
 		// Content
 		contentIds := make([]string, 0)
-		err = json.Unmarshal([]byte(service.IdContent), &contentIds)
+		err = json.Unmarshal([]byte(service.IdContentIds), &contentIds)
 		if err != nil {
 			return nil, err
 		}
-		service.IdContent = ""
+		service.IdContentIds = ""
 		service.Content = make([]xmp_api_structs.Content, 0)
 
 		db.Where("id IN (?)", contentIds).Find(&service.Content)
