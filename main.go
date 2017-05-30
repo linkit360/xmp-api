@@ -133,7 +133,7 @@ func testInitialization() {
 		},
 	).Info("Request Done")
 
-	log.Printf("%#v\n", resp.Services["6f257e12-f1f1-47d4-9a43-5bb966f94d6a"])
+	//log.Printf("%#v\n", resp.Services["6f257e12-f1f1-47d4-9a43-5bb966f94d6a"])
 
 	log.Info("")
 }

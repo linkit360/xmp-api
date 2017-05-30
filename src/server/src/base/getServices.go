@@ -3,8 +3,6 @@ package base
 import (
 	"encoding/json"
 
-	"log"
-
 	"github.com/linkit360/xmp-api/src/structs"
 )
 
@@ -30,13 +28,13 @@ func GetServices(id_provider int) (map[string]xmp_api_structs.Service, error) {
 			return nil, err
 		}
 
-		log.Printf("%#v\n", string(provOptsTmp))
+		//log.Printf("%#v\n", string(provOptsTmp))
 
 		err = json.Unmarshal(provOptsTmp, &service.ProviderOpts)
 		if err != nil {
 			return nil, err
 		}
-		log.Printf("%#v\n", service.SMSOnContent)
+		//log.Printf("%#v\n", service.SMSOnContent)
 
 		// Content
 		contentIds := make([]string, 0)
