@@ -5,15 +5,14 @@ type HandShakeRequest struct {
 }
 
 type HandShake struct {
-	Ok         bool               `json:"ok"`                    // false if error, true if ok
-	Error      string             `json:"error,omitempty"`       // error in case of any error
-	Status     int                `json:"status,omitempty"`      // Instance status
-	ProviderId int                `json:"id_provider,omitempty"` // Provider of Instance
-	Services   map[string]Service `json:"services,omitempty"`    // Map by uuid
-
-	//BlackList []string            `json:"blacklist,omitempty"` // array of blacklisted numbers
-	//Campaigns map[string]Campaign `json:"campaigns,omitempty"` // map by uuid
-	//Operators map[string]Operator `json:"operators,omitempty"` // map by anything
+	Ok        bool                `json:"ok"`                  // false if error, true if ok
+	Error     string              `json:"error,omitempty"`     // error in case of any error
+	Status    int                 `json:"status,omitempty"`    // Instance status
+	Services  map[string]Service  `json:"services,omitempty"`  // map by uuid
+	Campaigns map[string]Campaign `json:"campaigns,omitempty"` // map by uuid
+	Operators map[string]Operator `json:"operators,omitempty"` // map by anything
+	BlackList []string            `json:"blacklist,omitempty"` // array of blacklisted numbers
+	Pixels    []PixelSetting      `json:"pixel,omitempty"`
 }
 
 type Operator struct {
@@ -32,7 +31,7 @@ type AggregateRequest struct {
 }
 
 type Aggregate struct {
-	ProviderName           string `json:"provider_name,omitempty"`
+	InstanceId             string `json:"instance_id,omitempty"`
 	OperatorCode           int64  `json:"operator_code,omitempty"`
 	ReportAt               int64  `json:"report_at,omitempty"`
 	CampaignCode           string `json:"campaign_code,omitempty"`
@@ -73,4 +72,15 @@ type Campaign struct {
 	PageError        string `json:"page_error,omitempty"`
 	PageThankYou     string `json:"page_thank_you,omitempty"`
 	PageWelcome      string `json:"page_welcome,omitempty"`
+}
+
+type PixelSetting struct {
+	Id           string
+	CampaignCode string
+	OperatorCode int64
+	Publisher    string
+	Endpoint     string
+	Timeout      int
+	Enabled      bool
+	Ratio        int
 }
