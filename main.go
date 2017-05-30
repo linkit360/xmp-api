@@ -130,11 +130,10 @@ func testInitialization() {
 			"ok":       resp.Ok,
 			"error":    resp.Error,
 			"status":   resp.Status,
-			"provider": resp.ProviderId,
 			"services": len(resp.Services),
 		},
 	).Info("Request Done")
 
-	//log.Info(resp.Services)
+		//	log.Info(resp.Services["6f257e12-f1f1-47d4-9a43-5bb966f94d6a"].ProvOpts.SMSOnContent)
 	log.Info("")
 }

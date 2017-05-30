@@ -20,19 +20,19 @@ func GetServices(id_provider int) (map[string]xmp_api_structs.Service, error) {
 		if err != nil {
 			return nil, err
 		}
-		service.ProvOpts = append(service.ProvOpts, provOpts)
+			service.ProvOpts = provOpts
 		service.ServiceOptsJson = ""
 
 		// Content
 		contentIds := make([]string, 0)
-		err = json.Unmarshal([]byte(service.IdContentIds), &contentIds)
+			err = json.Unmarshal([]byte(service.ContentIdsJson), &contentIds)
 		if err != nil {
 			return nil, err
 		}
-		service.IdContentIds = ""
-		service.Content = make([]xmp_api_structs.Content, 0)
+			service.ContentIdsJson = ""
+			service.Contents = make([]xmp_api_structs.Content, 0)
 
-		db.Where("id IN (?)", contentIds).Find(&service.Content)
+			db.Where("id IN (?)", contentIds).Find(&service.Contents)
 
 		// Append to return
 		out[service.Id] = service
