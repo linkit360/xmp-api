@@ -49,7 +49,7 @@ func SaveRows(rows []xmp_api_structs.Aggregate) error {
 
 				");",
 			row.ReportAt,
-			row.ProviderName,
+			row.Provider,
 			row.OperatorCode,
 			row.CampaignCode,
 			row.LpHits,
