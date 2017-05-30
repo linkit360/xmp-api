@@ -17,12 +17,11 @@ func Initialization(c *gin.Context) {
 
 	status, id_provider := base.GetOptions(instance_id)
 	out := xmp_api_structs.HandShake{
-		Ok:     false,
-		Error:  "Status not 1",
-		Status: status,
+		Ok:    false,
+		Error: "Status not 1",
 	}
 
-	if out.Status == 1 {
+	if status == 1 {
 		// save client
 		Clients[instance_id] = c.ClientIP()
 

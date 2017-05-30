@@ -129,7 +129,6 @@ func testInitialization() {
 			"prefix":   "testInitialization",
 			"ok":       resp.Ok,
 			"error":    resp.Error,
-			"status":   resp.Status,
 			"services": len(resp.Services),
 		},
 	).Info("Request Done")
