@@ -31,7 +31,7 @@ type AggregateRequest struct {
 }
 
 type Aggregate struct {
-	InstanceId             string `json:"instance_id,omitempty"`
+	PrviderName            string `json:"provider_name,omitempty"`
 	OperatorCode           int64  `json:"operator_code,omitempty"`
 	ReportAt               int64  `json:"report_at,omitempty"`
 	CampaignCode           string `json:"campaign_code,omitempty"`
