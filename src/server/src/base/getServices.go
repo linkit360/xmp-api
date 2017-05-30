@@ -3,6 +3,8 @@ package base
 import (
 	"encoding/json"
 
+	"log"
+
 	"github.com/linkit360/xmp-api/src/structs"
 )
 
@@ -20,19 +22,32 @@ func GetServices(id_provider int) (map[string]xmp_api_structs.Service, error) {
 		if err != nil {
 			return nil, err
 		}
-			service.ProvOpts = provOpts
+		//service.ProvOpts = provOpts
 		service.ServiceOptsJson = ""
 
-		// Content
-		contentIds := make([]string, 0)
-			err = json.Unmarshal([]byte(service.ContentIdsJson), &contentIds)
+		provOptsTmp, err := json.Marshal(provOpts)
 		if err != nil {
 			return nil, err
 		}
-			service.ContentIdsJson = ""
-			service.Contents = make([]xmp_api_structs.Content, 0)
 
-			db.Where("id IN (?)", contentIds).Find(&service.Contents)
+		log.Printf("%#v\n", string(provOptsTmp))
+
+		err = json.Unmarshal(provOptsTmp, &service.ProviderOpts)
+		if err != nil {
+			return nil, err
+		}
+		log.Printf("%#v\n", service.SMSOnContent)
+
+		// Content
+		contentIds := make([]string, 0)
+		err = json.Unmarshal([]byte(service.ContentIdsJson), &contentIds)
+		if err != nil {
+			return nil, err
+		}
+		service.ContentIdsJson = ""
+		service.Contents = make([]xmp_api_structs.Content, 0)
+
+		db.Where("id IN (?)", contentIds).Find(&service.Contents)
 
 		// Append to return
 		out[service.Id] = service
