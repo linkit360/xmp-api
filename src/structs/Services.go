@@ -1,6 +1,7 @@
 package xmp_api_structs
 
 type Service struct {
+
 	Id              string       `gorm:"primary_key",json:"id,omitempty"`  // UUID
 	Code            string       `json:"code,omitempty"`                   // previous service id
 	Title           string       `json:"title,omitempty"`                  //
@@ -9,8 +10,8 @@ type Service struct {
 	ProvOpts            ProviderOpts `json:"prov_opts,omitempty"`          //
 	ContentIds          []string     `json:"content_ids,omitempty"`        // Unmarshalled content ids for use in content service (platform)
 	Contents            []Content    `json:"contents,omitempty"`           // Contents of service, unmarshalled and ready for use in platform
-		ServiceOptsJson string       `gorm:"column:service_opts",json:"-"` // taken from jsonb (database)
-		ContentIdsJson  string       `gorm:"column:id_content",json:"-"`   // taken from jsonb (database)
+	ServiceOptsJson string       `gorm:"column:service_opts",json:"-"` // taken from jsonb (database)
+	ContentIdsJson  string       `gorm:"column:id_content",json:"-"`   // taken from jsonb (database)
 }
 
 type ProviderOpts struct {
