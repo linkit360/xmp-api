@@ -25,27 +25,30 @@ func Send(instance_id string) {
 }
 
 func Aggregate(c *gin.Context) {
-	log.Info("")
-	log.Info("Call Aggregate")
+	var err error
 	var instance_id string = c.Query("instance_id")
-	log.Info(instance_id)
 
-	items := []xmp_api_structs.Aggregate{}
+	log.Info("Call Aggregate: " + instance_id)
 
 	out := gin.H{
-		"ok": true,
+		"ok": false,
 	}
 
-	if c.BindJSON(&items) == nil {
+	items := []xmp_api_structs.Aggregate{}
+	err = c.BindJSON(&items)
+	if err == nil {
 		websocket.NewReports(items)
 		err := base.SaveRows(items)
 		if err != nil {
-			out["ok"] = false
 			log.Error("Aggregate Save:", err)
+		} else {
+			out["ok"] = true
 		}
 	} else {
-		// error
+		log.Error("Aggregate Bind:", err)
 	}
+
+	log.Info("Aggregate OK")
 
 	c.JSON(
 		200,
