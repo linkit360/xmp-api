@@ -109,30 +109,30 @@ func echo(w http.ResponseWriter, r *http.Request) {
 func NewReports(rows []xmp_api_structs.Aggregate) {
 	for _, row := range rows {
 		log.WithFields(log.Fields{
-			"prefix":               "WS",
-				"ProviderName":     row.Provider,
-			"OperatorCode":         row.OperatorCode,
-			"CampaignId":           row.CampaignCode,
-			"LpHits":               row.LpHits,
-			"LpMsisdnHits":         row.LpMsisdnHits,
-			"MoTotal":              row.MoTotal,
-			"MoChargeSuccess":      row.MoChargeSuccess,
-			"MoChargeSum":          row.MoChargeSum,
-			"MoChargeFailed":       row.MoChargeFailed,
-			"MoRejected":           row.MoRejected,
-			"RenewalTotal":         row.RenewalTotal,
-			"RenewalChargeSuccess": row.RenewalChargeSuccess,
+			"prefix":                 "WS",
+			"InstanceId":             row.InstanceId,
+			"OperatorCode":           row.OperatorCode,
+			"CampaignId":             row.CampaignCode,
+			"LpHits":                 row.LpHits,
+			"LpMsisdnHits":           row.LpMsisdnHits,
+			"MoTotal":                row.MoTotal,
+			"MoChargeSuccess":        row.MoChargeSuccess,
+			"MoChargeSum":            row.MoChargeSum,
+			"MoChargeFailed":         row.MoChargeFailed,
+			"MoRejected":             row.MoRejected,
+			"RenewalTotal":           row.RenewalTotal,
+			"RenewalChargeSuccess":   row.RenewalChargeSuccess,
 			"RenewalChargeSum":       row.RenewalChargeSum,
 			"RenewalFailed":          row.RenewalFailed,
 			"InjectionTotal":         row.InjectionTotal,
 			"InjectionChargeSuccess": row.InjectionChargeSuccess,
 			"InjectionChargeSum":     row.InjectionChargeSum,
 			"InjectionFailed":        row.InjectionFailed,
-			"ExpiredTotal":         row.ExpiredTotal,
-			"ExpiredChargeSuccess": row.ExpiredChargeSuccess,
-			"ExpiredChargeSum":     row.ExpiredChargeSum,
-			"ExpiredFailed":        row.ExpiredFailed,
-			"Pixels":               row.Pixels,
+			"ExpiredTotal":           row.ExpiredTotal,
+			"ExpiredChargeSuccess":   row.ExpiredChargeSuccess,
+			"ExpiredChargeSum":       row.ExpiredChargeSum,
+			"ExpiredFailed":          row.ExpiredFailed,
+			"Pixels":                 row.Pixels,
 		}).Info("New Report")
 
 		if len(data.Countries) == 0 {
@@ -142,9 +142,7 @@ func NewReports(rows []xmp_api_structs.Aggregate) {
 		data.LpHits = data.LpHits + uint64(row.LpHits)
 		data.Mo = data.Mo + uint64(row.MoTotal)
 		data.MoSuccess = data.MoSuccess + uint64(row.MoChargeSuccess)
-			data.Countries[provs[row.Provider]] =
-					data.Countries[provs[row.Provider]] +
-				uint64(row.LpHits)
+		data.Countries[provs[row.InstanceId]] = data.Countries[provs[row.InstanceId]] + uint64(row.LpHits)
 	}
 }
 
