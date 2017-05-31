@@ -21,7 +21,7 @@ func SendAggregatedData(data []acceptorStructs.Aggregate) (acceptorStructs.Aggre
 
 func GetRandomAggregate() xmp_api_structs.Aggregate {
 	return xmp_api_structs.Aggregate{
-		InstanceId:           "test",
+		InstanceId:           "a7da1e9f-fcc1-4087-9c58-4d31bcdbd515",
 		ReportAt:             time.Now().UTC().Unix(),
 		CampaignCode:         "290",
 		OperatorCode:         52000,
