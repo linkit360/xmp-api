@@ -64,36 +64,36 @@ func Call(funcName string, res interface{}, req ...interface{}) error {
 	// GET by default
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return err
+		return fmt.Errorf("http.NewRequest: %s", err.Error())
 	}
 
 	if len(req) > 0 {
 		// POST
 		jsonValue, err := json.Marshal(req)
 		if err != nil {
-			return err
+			return fmt.Errorf("json.Marshal: %s", err.Error())
 		}
 
 		request, err = http.NewRequest("POST", url, bytes.NewBuffer(jsonValue))
 		if err != nil {
-			return err
+			return fmt.Errorf("POST http.NewRequest: %s", err.Error())
 		}
 	}
 
 	response, err := client.Do(request)
 	if err != nil {
-		return err
+		return fmt.Errorf("client.Do: %s", err.Error())
 	}
 	defer response.Body.Close()
 
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		return err
+		return fmt.Errorf("ioutil.ReadAll: %s", err.Error())
 	}
 
 	err = json.Unmarshal(body, &res)
 	if err != nil {
-		return err
+		return fmt.Errorf("%s, json.Unmarshal: %s", string(body), err.Error())
 	}
 
 	return nil
