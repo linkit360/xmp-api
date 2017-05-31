@@ -110,7 +110,7 @@ func NewReports(rows []xmp_api_structs.Aggregate) {
 	for _, row := range rows {
 		log.WithFields(log.Fields{
 			"prefix":                 "WS",
-			"ProviderName":           row.Provider,
+			"InstanceId":             row.InstanceId,
 			"OperatorCode":           row.OperatorCode,
 			"CampaignId":             row.CampaignCode,
 			"LpHits":                 row.LpHits,
@@ -142,9 +142,7 @@ func NewReports(rows []xmp_api_structs.Aggregate) {
 		data.LpHits = data.LpHits + uint64(row.LpHits)
 		data.Mo = data.Mo + uint64(row.MoTotal)
 		data.MoSuccess = data.MoSuccess + uint64(row.MoChargeSuccess)
-		data.Countries[provs[row.Provider]] =
-			data.Countries[provs[row.Provider]] +
-				uint64(row.LpHits)
+		data.Countries[provs[row.InstanceId]] = data.Countries[provs[row.InstanceId]] + uint64(row.LpHits)
 	}
 }
 

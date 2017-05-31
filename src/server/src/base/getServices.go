@@ -20,7 +20,6 @@ func GetServices(id_provider int) (map[string]xmp_api_structs.Service, error) {
 		if err != nil {
 			return nil, err
 		}
-		//service.ProvOpts = provOpts
 		service.ServiceOptsJson = ""
 
 		provOptsTmp, err := json.Marshal(provOpts)
@@ -28,13 +27,10 @@ func GetServices(id_provider int) (map[string]xmp_api_structs.Service, error) {
 			return nil, err
 		}
 
-		//log.Printf("%#v\n", string(provOptsTmp))
-
 		err = json.Unmarshal(provOptsTmp, &service.ProviderOpts)
 		if err != nil {
 			return nil, err
 		}
-		//log.Printf("%#v\n", service.SMSOnContent)
 
 		// Content
 		contentIds := make([]string, 0)

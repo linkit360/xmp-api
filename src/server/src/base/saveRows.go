@@ -13,7 +13,7 @@ func SaveRows(rows []xmp_api_structs.Aggregate) error {
 			"INSERT INTO xmp_reports ("+
 
 				"report_at, "+
-				"provider_name, "+
+				"id_instance, "+
 				"operator_code, "+
 				"id_campaign, "+
 				"lp_hits, "+
@@ -49,7 +49,7 @@ func SaveRows(rows []xmp_api_structs.Aggregate) error {
 
 				");",
 			row.ReportAt,
-			row.Provider,
+			row.InstanceId,
 			row.OperatorCode,
 			row.CampaignCode,
 			row.LpHits,
