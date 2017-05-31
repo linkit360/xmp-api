@@ -59,12 +59,12 @@ func GetWsData() (map[string]uint64, map[string]string, uint64, uint64, uint64) 
 		provs[prov] = iso
 	}
 
-	// TODO: providers by instance_id
+	// TODO: providers by id_instance
 	rows, err = db.Raw(
-		"SELECT instance_id, SUM(lp_hits) " +
+		"SELECT id_instance, SUM(lp_hits) " +
 			"FROM xmp_reports " +
 			"WHERE report_at >= '" + time.Now().Format("2006-01-02") + "' " +
-			"GROUP BY instance_id",
+			"GROUP BY id_instance",
 	).Rows()
 	if err != nil {
 		log.Fatal(err)
