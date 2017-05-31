@@ -19,7 +19,6 @@ func GetWsData() (map[string]uint64, map[string]string, uint64, uint64, uint64) 
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer rows.Close()
 
 	var LpHits uint64 = 0
 	var Mo uint64 = 0
@@ -81,5 +80,6 @@ func GetWsData() (map[string]uint64, map[string]string, uint64, uint64, uint64) 
 		countries[provs[prov]] = sum
 	}
 
+	defer rows.Close()
 	return countries, provs, LpHits, Mo, MoSuccess
 }
