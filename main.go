@@ -42,7 +42,7 @@ func runClient() {
 		Enabled:    true,
 		DSN:        "go:40400",
 		Timeout:    10,
-		InstanceId: "2f4fd741-61ef-45ab-8436-840ce54d6d29",
+		InstanceId: "a7da1e9f-fcc1-4087-9c58-4d31bcdbd515",
 	}
 
 	if err := xmp_api_client.Init(cfg); err != nil {

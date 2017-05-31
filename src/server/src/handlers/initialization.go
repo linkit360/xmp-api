@@ -21,12 +21,15 @@ func Initialization(c *gin.Context) {
 		Error: "Status not 1",
 	}
 
+	// Found instance
 	if status == 1 {
 		// save client
 		Clients[instance_id] = c.ClientIP()
 
 		out.Ok = true
 		out.Error = ""
+
+		// Load Services for instance
 		out.Services, err = base.GetServices(id_provider)
 		if err != nil {
 			out.Ok = false
