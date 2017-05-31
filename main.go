@@ -50,13 +50,12 @@ func runClient() {
 	}
 	log.Info("Ready")
 
-	//testAggregate()
-
 	//for {
 	// instance doing his work (wait)
 	testInitialization()
 	//time.Sleep(3 * time.Second)
 	//}
+	testAggregate()
 
 	/*
 		// Get BL All
@@ -106,15 +105,21 @@ func runClient() {
 
 func testAggregate() {
 	var resp struct {
-		Ok bool `json:"ok,omitempty"`
+		Ok    bool   `json:"ok,omitempty"`
+		Error string `json:"error,omitempty"`
 	}
 
-	err := xmp_api_client.Call("aggregate", &resp, xmp_api_client.GetRandomAggregate())
+	items := make([]interface{}, 0)
+	items = append(items, xmp_api_client.GetRandomAggregate())
+	//items = append(items, xmp_api_client.GetRandomAggregate())
+
+	err := xmp_api_client.Call("aggregate", &resp, items...)
 	if err != nil {
 		log.Error(err)
 	}
 
 	log.Debug(resp.Ok)
+	log.Debug(resp.Error)
 }
 
 func testInitialization() {

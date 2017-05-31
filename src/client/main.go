@@ -74,6 +74,8 @@ func Call(funcName string, res interface{}, req ...interface{}) error {
 			return fmt.Errorf("json.Marshal: %s", err.Error())
 		}
 
+		//log.Debug(string(jsonValue))
+
 		request, err = http.NewRequest("POST", url, bytes.NewBuffer(jsonValue))
 		if err != nil {
 			return fmt.Errorf("POST http.NewRequest: %s", err.Error())
