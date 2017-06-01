@@ -8,34 +8,40 @@ import (
 )
 
 func Initialization(c *gin.Context) {
-	log.Info("")
-	log.Info("Call Initialization")
-	var instance_id string = c.Query("instance_id")
-	log.Info(instance_id)
-
 	var err error
+	var instance_id string = c.Query("instance_id")
+	var out xmp_api_structs.HandShake
+
+	log.Info("Call Initialization: " + instance_id)
 
 	status, id_provider := base.GetOptions(instance_id)
-	out := xmp_api_structs.HandShake{
-		Ok:    false,
-		Error: "Status not 1",
+	if id_provider > 0 {
+		// Found instance
+		if status == 1 {
+			// save client
+			Clients[instance_id] = c.ClientIP()
+
+			out.Ok = true
+			out.Error = ""
+
+			// Load Services for instance
+			out.Services, err = base.GetServices(id_provider)
+			if err != nil {
+				out.Ok = false
+				out.Error = err.Error()
+				out.Services = nil
+			}
+		} else {
+			out.Ok = false
+			out.Error = "Status not 1"
+		}
+	} else {
+		out.Ok = false
+		out.Error = "Provider not found"
 	}
 
-	// Found instance
-	if status == 1 {
-		// save client
-		Clients[instance_id] = c.ClientIP()
-
-		out.Ok = true
-		out.Error = ""
-
-		// Load Services for instance
-		out.Services, err = base.GetServices(id_provider)
-		if err != nil {
-			out.Ok = false
-			out.Error = err.Error()
-			out.Services = nil
-		}
+	if out.Error != "" {
+		out.Error = "Init: " + out.Error
 	}
 
 	// remove me

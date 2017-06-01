@@ -38,7 +38,8 @@ func Init() {
 func GetOptions(instanceId string) (int, int) {
 	rows, err := db.Raw("SELECT status,id_provider FROM xmp_instances WHERE id = ?", instanceId).Rows()
 	if err != nil {
-		log.Fatal(err)
+		log.Error(err)
+		return 0, 0
 	}
 	defer rows.Close()
 
