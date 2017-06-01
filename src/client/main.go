@@ -25,6 +25,10 @@ type ClientConfig struct {
 	InstanceId string `default:"" yaml:"instance_id"`
 }
 
+func init() {
+	ChanServices = make(chan xmp_api_structs.Service, 1)
+}
+
 func Init(clientConf ClientConfig) error {
 	log.SetFormatter(new(prefixed.TextFormatter))
 	log.SetLevel(log.DebugLevel)

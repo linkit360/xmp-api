@@ -1,14 +1,22 @@
 package handlers
 
 import (
-	"github.com/Sirupsen/logrus"
+	"encoding/json"
+
+	log "github.com/Sirupsen/logrus"
 	"github.com/linkit360/xmp-api/src/server/src/base"
 )
 
 func Update() {
-	logrus.Info("Handlers: Update")
+	log.Info("Handlers: Update")
 	for update := range base.ChanUpdate {
-		logrus.Info("Handlers: Update: ", update.For)
-		Send(update.For, update.Payload)
+		log.Info("Handlers: Update: ", update.For)
+
+		jsval, err := json.Marshal(update)
+		if err != nil {
+			log.Error("Handlers: Update: ", err)
+		}
+
+		Send(update.For, jsval)
 	}
 }

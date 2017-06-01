@@ -60,7 +60,6 @@ func runClient() {
 
 	for {
 		time.Sleep(3 * time.Second)
-
 	}
 
 	/*
