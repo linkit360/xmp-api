@@ -9,18 +9,24 @@ import (
 	"time"
 
 	log "github.com/Sirupsen/logrus"
+	"github.com/linkit360/xmp-api/src/structs"
 	"github.com/x-cray/logrus-prefixed-formatter"
 	"gopkg.in/gin-gonic/gin.v1"
 )
 
 var client *http.Client
 var config ClientConfig
+var ChanServices chan xmp_api_structs.Service
 
 type ClientConfig struct {
 	Enabled    bool   `yaml:"enabled"`
 	DSN        string `default:":50307" yaml:"dsn"`
 	Timeout    int    `default:"10" yaml:"timeout"`
 	InstanceId string `default:"" yaml:"instance_id"`
+}
+
+func init() {
+	ChanServices = make(chan xmp_api_structs.Service, 1)
 }
 
 func Init(clientConf ClientConfig) error {
@@ -40,14 +46,7 @@ func runGin() {
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 
-	r.GET(
-		"/ping",
-		func(c *gin.Context) {
-			c.JSON(200, gin.H{
-				"message": "pong",
-			})
-		},
-	)
+	r.POST("/update", update)
 
 	// use config
 	r.Run(":40402")

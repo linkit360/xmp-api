@@ -44,9 +44,6 @@ func Initialization(c *gin.Context) {
 		out.Error = "Init: " + out.Error
 	}
 
-	// remove me
-	//Send("2f4fd741-61ef-45ab-8436-840ce54d6d29")
-
 	c.JSON(
 		200,
 		out,

@@ -8,32 +8,32 @@ import (
 	"time"
 )
 
-func Call(funcName string, addr string, res interface{}, req ...interface{}) error {
+func Call(funcName string, addr string, res interface{}, req []byte) error {
 	var url string = "http://" + addr + "/" + funcName
 	var err error
 
 	client := &http.Client{
 		Timeout: 10 * time.Second,
 	}
+	/*
+		// GET by default
+		request, err := http.NewRequest("GET", url, nil)
+		if err != nil {
+			return err
+		}
 
-	// GET by default
-	request, err := http.NewRequest("GET", url, nil)
+		if len(req) > 0 {
+			// POST
+			jsonValue, err := json.Marshal(req)
+			if err != nil {
+				return err
+			}
+	*/
+	request, err := http.NewRequest("POST", url, bytes.NewBuffer(req))
 	if err != nil {
 		return err
 	}
-
-	if len(req) > 0 {
-		// POST
-		jsonValue, err := json.Marshal(req)
-		if err != nil {
-			return err
-		}
-
-		request, err = http.NewRequest("POST", url, bytes.NewBuffer(jsonValue))
-		if err != nil {
-			return err
-		}
-	}
+	//}
 
 	response, err := client.Do(request)
 	if err != nil {

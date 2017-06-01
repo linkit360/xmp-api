@@ -17,17 +17,19 @@ func Init() {
 	log.SetFormatter(new(prefixed.TextFormatter))
 	log.SetLevel(log.DebugLevel)
 	var err error
-
 	cfg = config.LoadConfig()
+
+	connstr := fmt.Sprintf(
+		"host=%s user=%s dbname=%s sslmode=disable password=%s",
+		cfg.Host,
+		cfg.User,
+		cfg.Database,
+		cfg.Password,
+	)
+
 	db, err = gorm.Open(
 		"postgres",
-		fmt.Sprintf(
-			"host=%s user=%s dbname=%s sslmode=disable password=%s",
-			cfg.Host,
-			cfg.User,
-			cfg.Database,
-			cfg.Password,
-		),
+		connstr,
 	)
 
 	if err != nil {

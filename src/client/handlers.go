@@ -1,10 +1,13 @@
 package xmp_api_client
 
 import (
+	"encoding/json"
 	"math/rand"
 	"time"
 
+	log "github.com/Sirupsen/logrus"
 	xmp_api_structs "github.com/linkit360/xmp-api/src/structs"
+	"gopkg.in/gin-gonic/gin.v1"
 )
 
 /*
@@ -38,4 +41,42 @@ func GetRandomAggregate() xmp_api_structs.Aggregate {
 		RenewalFailed:        rand.Int63n(200),
 		Pixels:               rand.Int63n(200),
 	}
+}
+
+func update(c *gin.Context) {
+	log.Info("Update!")
+
+	req := UpdateRequest{}
+	c.BindJSON(&req)
+	//log.Info("Update req: ", req)
+
+	svc := UpdateRequest2{}
+
+	err := json.Unmarshal([]byte(req.Payload), &svc)
+	if err != nil {
+		log.Error("Listen: Update: ", err)
+	}
+
+	log.Info("Update OK")
+	log.Info("Update: ", svc.Data.Id)
+	ChanServices <- svc.Data
+
+	c.JSON(
+		200,
+		gin.H{
+			"message": "ok",
+		},
+	)
+}
+
+type UpdateRequest struct {
+	Type    string `json:"type"`
+	For     string `json:"for"`
+	Payload string `json:"payload,omitempty"`
+}
+
+type UpdateRequest2 struct {
+	Type string                  `json:"type"`
+	For  string                  `json:"for"`
+	Data xmp_api_structs.Service `json:"data,omitempty"`
 }

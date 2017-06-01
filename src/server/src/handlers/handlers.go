@@ -14,14 +14,14 @@ func init() {
 	Clients = make(map[string]string)
 }
 
-func Send(instance_id string) {
+func Send(instance_id string, payload []byte) {
 	var resp struct {
 		Message string `json:"message,omitempty"`
 	}
 
-	Call("ping", Clients[instance_id]+":40402", &resp)
+	Call("update", Clients[instance_id]+":40402", &resp, payload)
 
-	log.Debug(resp.Message)
+	log.Debug("Send: ", resp.Message)
 }
 
 func Aggregate(c *gin.Context) {
