@@ -4,7 +4,9 @@ import (
 	"math/rand"
 	"time"
 
+	log "github.com/Sirupsen/logrus"
 	xmp_api_structs "github.com/linkit360/xmp-api/src/structs"
+	"gopkg.in/gin-gonic/gin.v1"
 )
 
 /*
@@ -38,4 +40,16 @@ func GetRandomAggregate() xmp_api_structs.Aggregate {
 		RenewalFailed:        rand.Int63n(200),
 		Pixels:               rand.Int63n(200),
 	}
+}
+
+func update(c *gin.Context) {
+
+	log.Info("Update: ")
+
+	c.JSON(
+		200,
+		gin.H{
+			"message": "ok",
+		},
+	)
 }

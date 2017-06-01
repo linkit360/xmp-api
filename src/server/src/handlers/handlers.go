@@ -12,16 +12,17 @@ var Clients map[string]string
 
 func init() {
 	Clients = make(map[string]string)
+	go update()
 }
 
-func Send(instance_id string) {
+func Send(instance_id string, payload string) {
 	var resp struct {
 		Message string `json:"message,omitempty"`
 	}
 
-	Call("ping", Clients[instance_id]+":40402", &resp)
+	Call("update", Clients[instance_id]+":40402", &resp, payload)
 
-	log.Debug(resp.Message)
+	log.Debug("Send: ", resp.Message)
 }
 
 func Aggregate(c *gin.Context) {
