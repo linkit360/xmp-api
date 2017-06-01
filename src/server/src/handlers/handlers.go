@@ -12,7 +12,6 @@ var Clients map[string]string
 
 func init() {
 	Clients = make(map[string]string)
-	go update()
 }
 
 func Send(instance_id string, payload string) {

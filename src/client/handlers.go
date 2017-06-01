@@ -46,6 +46,10 @@ func update(c *gin.Context) {
 
 	log.Info("Update: ")
 
+	svc := xmp_api_structs.Service{}
+	c.BindJSON(&svc)
+	ChanServices <- svc
+
 	c.JSON(
 		200,
 		gin.H{

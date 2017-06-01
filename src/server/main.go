@@ -26,6 +26,7 @@ func Init() {
 	go websocket.Init()
 
 	go base.Listen()
+	go handlers.Update()
 
 	log.Info("Init Done")
 	runGin()

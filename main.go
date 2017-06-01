@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"time"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/linkit360/xmp-api/src/client"
@@ -55,7 +56,12 @@ func runClient() {
 	testInitialization()
 	//time.Sleep(3 * time.Second)
 	//}
-	testAggregate()
+	//testAggregate()
+
+	for {
+		time.Sleep(3 * time.Second)
+
+	}
 
 	/*
 		// Get BL All
