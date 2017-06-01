@@ -40,7 +40,6 @@ func GetOptions(instanceId string) (int, int) {
 	if err != nil {
 		log.Error(err)
 		return 0, 0
-
 	}
 	defer rows.Close()
 
