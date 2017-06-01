@@ -12,7 +12,7 @@ import (
 var ChanUpdate chan UpdateCall
 
 func Listen() {
-	ChanUpdate = make(chan UpdateCall)
+	ChanUpdate = make(chan UpdateCall, 1)
 
 	log.Info("Base: Listen")
 	var err error
