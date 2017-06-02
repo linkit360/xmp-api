@@ -38,12 +38,13 @@ func Init(clientConf ClientConfig) error {
 		Timeout: time.Duration(config.Timeout) * time.Second,
 	}
 
+	log.Info("XMPAPI: Init")
 	go runGin()
 	return nil
 }
 
 func runGin() {
-	gin.SetMode(gin.ReleaseMode)
+	//gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 
 	r.POST("/update", update)
