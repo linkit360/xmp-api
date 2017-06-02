@@ -4,10 +4,11 @@ import (
 	"github.com/linkit360/xmp-api/src/structs"
 )
 
-func SaveRows(rows []xmp_api_structs.Aggregate) error {
+func SaveRows(rows []xmp_api_structs.Aggregate) (error, int64) {
+	var total int64
 	//TODO: make bulk request
 	for _, row := range rows {
-		db.Exec(
+		total = total + db.Exec(
 			"INSERT INTO xmp_reports ("+
 
 				"report_at, "+
@@ -76,8 +77,8 @@ func SaveRows(rows []xmp_api_structs.Aggregate) error {
 			row.ExpiredChargeSuccess,
 			row.ExpiredChargeSum,
 			row.ExpiredFailed,
-		)
+		).RowsAffected
 	}
 
-	return nil
+	return nil, total
 }

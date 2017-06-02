@@ -2,7 +2,6 @@ package main
 
 import (
 	"os"
-	"time"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/linkit360/xmp-api/src/client"
@@ -41,7 +40,7 @@ func runClient() {
 	log.Info("Testing client")
 	cfg := xmp_api_client.ClientConfig{
 		Enabled:    true,
-		DSN:        "go:40400",
+		DSN:        "go:50318",
 		Timeout:    10,
 		InstanceId: "a7da1e9f-fcc1-4087-9c58-4d31bcdbd515",
 	}
@@ -56,11 +55,11 @@ func runClient() {
 	testInitialization()
 	//time.Sleep(3 * time.Second)
 	//}
-	//testAggregate()
+	testAggregate()
 
-	for {
-		time.Sleep(3 * time.Second)
-	}
+	//for {
+	//	time.Sleep(3 * time.Second)
+	//}
 
 	/*
 		// Get BL All

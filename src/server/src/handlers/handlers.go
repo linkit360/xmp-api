@@ -26,8 +26,10 @@ func Send(instance_id string, payload []byte) {
 
 func Aggregate(c *gin.Context) {
 	var err error
+	var total int64
 	var instance_id string = c.Query("instance_id")
 
+	log.Infoln()
 	log.Info("Call Aggregate: " + instance_id)
 
 	items := []xmp_api_structs.Aggregate{}
@@ -35,7 +37,7 @@ func Aggregate(c *gin.Context) {
 	if err == nil {
 		//log.Debugf("%#+v\n", items)
 		websocket.NewReports(items)
-		err := base.SaveRows(items)
+		err, total = base.SaveRows(items)
 		if err != nil {
 			log.Error("Aggregate Save: ", err)
 		}
@@ -50,13 +52,14 @@ func Aggregate(c *gin.Context) {
 		log.Info("Aggregate FAIL")
 	} else {
 		out["ok"] = true
-		log.Info("Aggregate OK")
+		log.Info("Aggregate OK: ", total)
 	}
 
 	c.JSON(
 		200,
 		out,
 	)
+	log.Infoln()
 }
 
 /*
