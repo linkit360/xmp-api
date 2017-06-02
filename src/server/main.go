@@ -39,5 +39,5 @@ func runGin() {
 	r.GET("/initialization", handlers.Initialization)
 	r.POST("/aggregate", handlers.Aggregate)
 
-	r.Run(":40400")
+	r.Run(":50318")
 }

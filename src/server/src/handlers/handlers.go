@@ -19,7 +19,7 @@ func Send(instance_id string, payload []byte) {
 		Message string `json:"message,omitempty"`
 	}
 
-	Call("update", Clients[instance_id]+":40402", &resp, payload)
+	Call("update", Clients[instance_id]+":50318", &resp, payload)
 
 	log.Debug("Send: ", resp.Message)
 }
