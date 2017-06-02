@@ -49,7 +49,7 @@ func runGin() {
 	r.POST("/update", update)
 
 	// use config
-	r.Run(":50318")
+	r.Run(":50319")
 }
 
 func Call(funcName string, res interface{}, req ...interface{}) error {
