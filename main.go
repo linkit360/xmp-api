@@ -55,7 +55,9 @@ func runClient() {
 	testInitialization()
 	//time.Sleep(3 * time.Second)
 	//}
-	testAggregate()
+	//testAggregate()
+
+	testUpdateRead()
 
 	//for {
 	//	time.Sleep(3 * time.Second)
@@ -145,4 +147,11 @@ func testInitialization() {
 	//log.Printf("%#v\n", resp.Services["6f257e12-f1f1-47d4-9a43-5bb966f94d6a"])
 
 	log.Info("")
+}
+
+func testUpdateRead() {
+	for {
+		v := <-xmp_api_client.ChanServices
+		log.Info("UpdateTest: ", v.Id)
+	}
 }

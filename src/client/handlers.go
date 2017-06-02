@@ -62,6 +62,7 @@ func update(c *gin.Context) {
 	log.Info("Update OK")
 	log.Info("Update: ", svc.Data.Id)
 	ChanServices <- svc.Data
+	log.Info("Update chan: ", len(ChanServices))
 
 	c.JSON(
 		200,

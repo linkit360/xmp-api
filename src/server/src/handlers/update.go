@@ -9,6 +9,7 @@ import (
 
 func Update() {
 	log.Info("Handlers: Update")
+
 	for update := range base.ChanUpdate {
 		log.Info("Handlers: Update: ", update.For)
 
