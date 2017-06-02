@@ -30,12 +30,13 @@ func Listen() {
 			fmt.Println(err.Error())
 		}
 	}
+
 	listener := pq.NewListener(connstr, 10*time.Second, time.Minute, reportProblem)
 	err = listener.Listen("xmp_update")
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("entering main loop")
+
 	for {
 		waitForNotification(listener)
 	}

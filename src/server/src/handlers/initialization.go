@@ -20,6 +20,7 @@ func Initialization(c *gin.Context) {
 		if status == 1 {
 			// save client
 			Clients[instance_id] = c.ClientIP()
+			log.Info("Initialization: " + instance_id + ": " + Clients[instance_id])
 
 			out.Ok = true
 			out.Error = ""
