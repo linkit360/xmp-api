@@ -14,13 +14,16 @@ import (
 	"gopkg.in/gin-gonic/gin.v1"
 )
 
-var client *http.Client
-var config ClientConfig
-var ChanServices chan xmp_api_structs.Service
+var (
+	client        *http.Client
+	config        ClientConfig
+	ChanServices  chan xmp_api_structs.Service
+	ChanCampaigns chan xmp_api_structs.Campaign
+)
 
 type ClientConfig struct {
 	Enabled    bool   `yaml:"enabled"`
-	DSN        string `default:":50307" yaml:"dsn"`
+	DSN        string `default:":50318" yaml:"dsn"`
 	Timeout    int    `default:"10" yaml:"timeout"`
 	InstanceId string `default:"" yaml:"instance_id"`
 }
@@ -73,8 +76,6 @@ func Call(funcName string, res interface{}, req ...interface{}) error {
 		if err != nil {
 			return fmt.Errorf("json.Marshal: %s", err.Error())
 		}
-
-		//log.Debug(string(jsonValue))
 
 		request, err = http.NewRequest("POST", url, bytes.NewBuffer(jsonValue))
 		if err != nil {

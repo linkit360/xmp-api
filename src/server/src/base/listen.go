@@ -9,6 +9,12 @@ import (
 	"github.com/lib/pq"
 )
 
+type UpdateCall struct {
+	Type string `json:"type"`
+	For  string `json:"for"`
+	Data string `json:"data,omitempty"`
+}
+
 func Listen() {
 	log.Info("Base: Listen")
 	var err error
@@ -41,23 +47,22 @@ func Listen() {
 func waitForNotification(l *pq.Listener) {
 	select {
 	case payload := <-l.Notify:
-		pl := UpdateCall{}
-		err := json.Unmarshal([]byte(payload.Extra), &pl)
-		if err != nil {
-			log.Error("Listen: waitForNotification: ", err)
-		} else {
-			log.Info("Listen: " + pl.Type + " for " + pl.For)
-			ChanUpdate <- pl
-			log.Info("Listen: Write OK")
-		}
+		handleNotify(payload.Extra)
 
 	case <-time.After(90 * time.Second):
 		go l.Ping()
 	}
 }
 
-type UpdateCall struct {
-	Type string `json:"type"`
-	For  string `json:"for"`
-	Data string `json:"data,omitempty"`
+func handleNotify(payload string) {
+	pl := UpdateCall{}
+	err := json.Unmarshal([]byte(payload), &pl)
+	if err != nil {
+		log.Error("Listen: waitForNotification: ", err)
+		return
+	}
+
+	log.Info("Listen: " + pl.Type + " for " + pl.For)
+	ChanUpdate <- pl
+	log.Info("Listen: Write OK")
 }

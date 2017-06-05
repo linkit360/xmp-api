@@ -56,14 +56,13 @@ func update(c *gin.Context) {
 			log.Error("Handlers: Update: ", err)
 		}
 
-		log.Info("1", svc.Contents)
+		log.Info("SMSOnContent: ", svc.SMSOnContent)
 
 		log.Info("Update Service: ", svc.Id)
 		ChanServices <- svc
 	}
 
 	log.Info("Update OK")
-
 	c.JSON(
 		200,
 		gin.H{
