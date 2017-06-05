@@ -6,8 +6,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"time"
-
-	"github.com/Sirupsen/logrus"
 )
 
 func Call(funcName string, addr string, res interface{}, request []byte) error {
@@ -31,8 +29,6 @@ func Call(funcName string, addr string, res interface{}, request []byte) error {
 				return err
 			}
 	*/
-
-	logrus.Debug("request", string(request))
 
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(request))
 	if err != nil {
