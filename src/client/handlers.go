@@ -10,17 +10,11 @@ import (
 	"gopkg.in/gin-gonic/gin.v1"
 )
 
-/*
-func SendAggregatedData(data []acceptorStructs.Aggregate) (acceptorStructs.AggregateResponse, error) {
-	var res acceptorStructs.AggregateResponse
-	err := call(
-		"Aggregate.Receive",
-		acceptorStructs.AggregateRequest{Aggregated: data},
-		&res,
-	)
-	return res, err
+type UpdateRequest struct {
+	Type string `json:"type"` // Type of entity (service/campaign) && type of event (new/update) ex: service.new
+	For  string `json:"for"`  // Instance ID who is responsible for handling the event
+	Data string `json:"data"` // JSON of entity
 }
-*/
 
 func GetRandomAggregate() xmp_api_structs.Aggregate {
 	return xmp_api_structs.Aggregate{
@@ -56,7 +50,7 @@ func update(c *gin.Context) {
 			log.Error("Handlers: Update: ", err)
 		}
 
-		log.Info("SMSOnContent: ", svc.SMSOnContent)
+		//log.Info("PeriodicDays: ", svc.PeriodicDays)
 
 		log.Info("Update Service: ", svc.Id)
 		ChanServices <- svc
@@ -69,10 +63,4 @@ func update(c *gin.Context) {
 			"message": "ok",
 		},
 	)
-}
-
-type UpdateRequest struct {
-	Type string `json:"type"`
-	For  string `json:"for"`
-	Data string `json:"data"`
 }
