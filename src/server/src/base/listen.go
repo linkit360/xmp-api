@@ -9,11 +9,7 @@ import (
 	"github.com/lib/pq"
 )
 
-var ChanUpdate chan UpdateCall
-
 func Listen() {
-	ChanUpdate = make(chan UpdateCall)
-
 	log.Info("Base: Listen")
 	var err error
 
@@ -54,6 +50,7 @@ func waitForNotification(l *pq.Listener) {
 
 			pl.Payload = payload.Extra
 			ChanUpdate <- pl
+			log.Info("Listen Write OK")
 		}
 
 	case <-time.After(90 * time.Second):

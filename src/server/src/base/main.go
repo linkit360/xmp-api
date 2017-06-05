@@ -12,6 +12,11 @@ import (
 
 var cfg config.DbConfig
 var db *gorm.DB
+var ChanUpdate chan UpdateCall
+
+func init() {
+	ChanUpdate = make(chan UpdateCall)
+}
 
 func Init() {
 	log.SetFormatter(new(prefixed.TextFormatter))
