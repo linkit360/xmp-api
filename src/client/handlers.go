@@ -46,24 +46,23 @@ func GetRandomAggregate() xmp_api_structs.Aggregate {
 }
 
 func update(c *gin.Context) {
-	log.Info()
-	log.Info("Update!")
-
 	req := UpdateRequest{}
 	c.BindJSON(&req)
-	//log.Info("Update req: ", req)
 
-	svc := UpdateRequest2{}
+	if req.Type == "service.new" || req.Type == "service.update" {
+		svc := xmp_api_structs.Service{}
+		err := json.Unmarshal([]byte(req.Data), &svc)
+		if err != nil {
+			log.Error("Handlers: Update: ", err)
+		}
 
-	err := json.Unmarshal([]byte(req.Payload), &svc)
-	if err != nil {
-		log.Error("Listen: Update: ", err)
+		log.Info("1", svc.Contents)
+
+		log.Info("Update Service: ", svc.Id)
+		ChanServices <- svc
 	}
 
 	log.Info("Update OK")
-	log.Info("Update: ", svc.Data.Id)
-	ChanServices <- svc.Data
-	log.Info("Update chan: ", len(ChanServices))
 
 	c.JSON(
 		200,
@@ -74,13 +73,7 @@ func update(c *gin.Context) {
 }
 
 type UpdateRequest struct {
-	Type    string `json:"type"`
-	For     string `json:"for"`
-	Payload string `json:"payload,omitempty"`
-}
-
-type UpdateRequest2 struct {
-	Type string                  `json:"type"`
-	For  string                  `json:"for"`
-	Data xmp_api_structs.Service `json:"data,omitempty"`
+	Type string `json:"type"`
+	For  string `json:"for"`
+	Data string `json:"data"`
 }
