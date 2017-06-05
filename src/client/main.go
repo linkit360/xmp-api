@@ -26,7 +26,7 @@ type ClientConfig struct {
 }
 
 func init() {
-	ChanServices = make(chan xmp_api_structs.Service, 1)
+	ChanServices = make(chan xmp_api_structs.Service)
 }
 
 func Init(clientConf ClientConfig) error {
@@ -44,7 +44,7 @@ func Init(clientConf ClientConfig) error {
 }
 
 func runGin() {
-	//gin.SetMode(gin.ReleaseMode)
+	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 
 	r.POST("/update", update)

@@ -46,6 +46,7 @@ func GetRandomAggregate() xmp_api_structs.Aggregate {
 }
 
 func update(c *gin.Context) {
+	log.Info()
 	log.Info("Update!")
 
 	req := UpdateRequest{}

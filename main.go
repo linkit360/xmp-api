@@ -57,7 +57,7 @@ func runClient() {
 	//}
 	//testAggregate()
 
-	testUpdateRead()
+	//testUpdateRead()
 
 	//for {
 	//	time.Sleep(3 * time.Second)

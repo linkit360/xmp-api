@@ -12,7 +12,7 @@ import (
 var ChanUpdate chan UpdateCall
 
 func Listen() {
-	ChanUpdate = make(chan UpdateCall, 1)
+	ChanUpdate = make(chan UpdateCall)
 
 	log.Info("Base: Listen")
 	var err error
@@ -58,10 +58,6 @@ func waitForNotification(l *pq.Listener) {
 
 	case <-time.After(90 * time.Second):
 		go l.Ping()
-		// Check if there's more work available, just in case it takes
-		// a while for the Listener to notice connection loss and
-		// reconnect.
-		//fmt.Println("received no work for 90 seconds, checking for new work")
 	}
 }
 
