@@ -8,10 +8,7 @@ import (
 )
 
 func Update() {
-	log.Info("Handlers: Update")
-
 	for {
-		log.Info("Handlers: Update: z1")
 		update := <-base.ChanUpdate
 		log.Info("Handlers: Update: ", update.For)
 
@@ -19,9 +16,7 @@ func Update() {
 		if err != nil {
 			log.Error("Handlers: Update: ", err)
 		}
-		log.Info("Handlers: Update: z2")
 
 		Send(update.For, jsval)
-		log.Info("Handlers: Update: z3")
 	}
 }

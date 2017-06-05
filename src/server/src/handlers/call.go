@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func Call(funcName string, addr string, res interface{}, req []byte) error {
+func Call(funcName string, addr string, res interface{}, request []byte) error {
 	var url string = "http://" + addr + "/" + funcName
 	var err error
 
@@ -29,13 +29,14 @@ func Call(funcName string, addr string, res interface{}, req []byte) error {
 				return err
 			}
 	*/
-	request, err := http.NewRequest("POST", url, bytes.NewBuffer(req))
+
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(request))
 	if err != nil {
 		return err
 	}
 	//}
 
-	response, err := client.Do(request)
+	response, err := client.Do(req)
 	if err != nil {
 		return err
 	}

@@ -19,9 +19,6 @@ func Send(instance_id string, payload []byte) {
 		Message string `json:"message,omitempty"`
 	}
 
-	log.Info("Handlers: Update: zsid ", instance_id)
-	log.Info("Handlers: Update: zsaddr ", Clients[instance_id]+":50319")
-
 	Call("update", Clients[instance_id]+":50319", &resp, payload)
 
 	log.Debug("Send: ", resp.Message)

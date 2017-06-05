@@ -47,10 +47,8 @@ func waitForNotification(l *pq.Listener) {
 			log.Error("Listen: waitForNotification: ", err)
 		} else {
 			log.Info("Listen: " + pl.Type + " for " + pl.For)
-
-			pl.Payload = payload.Extra
 			ChanUpdate <- pl
-			log.Info("Listen Write OK")
+			log.Info("Listen: Write OK")
 		}
 
 	case <-time.After(90 * time.Second):
@@ -59,7 +57,7 @@ func waitForNotification(l *pq.Listener) {
 }
 
 type UpdateCall struct {
-	Type    string `json:"type"`
-	For     string `json:"for"`
-	Payload string `json:"payload,omitempty"`
+	Type string `json:"type"`
+	For  string `json:"for"`
+	Data string `json:"data,omitempty"`
 }
