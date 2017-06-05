@@ -55,7 +55,7 @@ func runClient() {
 	testInitialization()
 	//time.Sleep(3 * time.Second)
 	//}
-	//testAggregate()
+	testAggregate()
 
 	testUpdateRead()
 
@@ -124,8 +124,13 @@ func testAggregate() {
 		log.Error(err)
 	}
 
-	log.Debug(resp.Ok)
-	log.Debug(resp.Error)
+	log.WithFields(
+		log.Fields{
+			"prefix": "testAggregate",
+			"ok":     resp.Ok,
+			"error":  resp.Error,
+		},
+	).Info("Request Done")
 }
 
 func testInitialization() {
@@ -143,10 +148,6 @@ func testInitialization() {
 			"services": len(resp.Services),
 		},
 	).Info("Request Done")
-
-	//log.Printf("%#v\n", resp.Services["6f257e12-f1f1-47d4-9a43-5bb966f94d6a"])
-
-	log.Info("")
 }
 
 func testUpdateRead() {
