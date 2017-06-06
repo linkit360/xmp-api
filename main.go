@@ -50,6 +50,39 @@ func runClient() {
 	}
 	log.Info("Ready")
 
+	/*
+		// AWS S3
+		sess, err := session.NewSession(&aws.Config{
+			Region: aws.String("ap-southeast-1"),
+			Credentials: credentials.NewStaticCredentials(
+				"AKIAILRGTUB6EBNVUPFA",
+				"8Hf/b4jldspVA2hCUlBqAJhmpCjr7M1zAU/LYjrl",
+				"",
+			),
+		})
+		if err != nil {
+			log.Error("Cannot init S3 Session ", err)
+		}
+
+		svc := s3.New(sess)
+
+		ctx := context.Background()
+
+		result, err := svc.GetObjectWithContext(ctx, &s3.GetObjectInput{
+			Bucket: aws.String("xmp-lp"),
+			Key:    aws.String("31788279-604c-416f-868c-c96dbdbe3e3c"),
+		})
+		if err != nil {
+			log.Error("Cannot init S3 Client ", err)
+		}
+
+		defer result.Body.Close()
+
+		log.Info("Object Etag: ", aws.StringValue(result.ETag))
+
+		return
+	*/
+
 	//for {
 	// instance doing his work (wait)
 	testInitialization()
