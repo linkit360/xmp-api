@@ -47,16 +47,42 @@ func update(c *gin.Context) {
 		svc := xmp_api_structs.Service{}
 		err := json.Unmarshal([]byte(req.Data), &svc)
 		if err != nil {
-			log.Error("Handlers: Update: ", err)
+			log.WithFields(log.Fields{
+				"prefix": "XMPAPI",
+			}).Error(
+				"Update: ",
+				err.Error(),
+			)
 		}
 
-		//log.Info("PeriodicDays: ", svc.PeriodicDays)
+		log.WithFields(log.Fields{
+			"prefix": "XMPAPI",
+			"type":   req.Type,
+		}).Info(svc.Id)
 
-		log.Info("Update Service: ", svc.Id)
 		ChanServices <- svc
 	}
 
-	log.Info("Update OK")
+	if req.Type == "campaign.new" || req.Type == "campaign.update" {
+		campaign := xmp_api_structs.Campaign{}
+		err := json.Unmarshal([]byte(req.Data), &campaign)
+		if err != nil {
+			log.Error("Update: ", err)
+		}
+
+		log.WithFields(log.Fields{
+			"prefix": "XMPAPI",
+			"type":   req.Type,
+		}).Info(campaign.Id)
+
+		ChanCampaigns <- campaign
+	}
+
+	log.WithFields(log.Fields{
+		"prefix": "XMPAPI",
+		"type":   req.Type,
+	}).Info("Update OK")
+
 	c.JSON(
 		200,
 		gin.H{
