@@ -15,6 +15,11 @@ func init() {
 }
 
 func Send(instance_id string, payload []byte) {
+	if Clients[instance_id] == "" {
+		log.Error("Send: No Instance")
+		return
+	}
+
 	var resp struct {
 		Message string `json:"message,omitempty"`
 	}

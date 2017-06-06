@@ -10,17 +10,11 @@ import (
 	"gopkg.in/gin-gonic/gin.v1"
 )
 
-/*
-func SendAggregatedData(data []acceptorStructs.Aggregate) (acceptorStructs.AggregateResponse, error) {
-	var res acceptorStructs.AggregateResponse
-	err := call(
-		"Aggregate.Receive",
-		acceptorStructs.AggregateRequest{Aggregated: data},
-		&res,
-	)
-	return res, err
+type UpdateRequest struct {
+	Type string `json:"type"` // Type of entity (service/campaign) && type of event (new/update) ex: service.new
+	For  string `json:"for"`  // Instance ID who is responsible for handling the event
+	Data string `json:"data"` // JSON of entity
 }
-*/
 
 func GetRandomAggregate() xmp_api_structs.Aggregate {
 	return xmp_api_structs.Aggregate{
@@ -53,26 +47,46 @@ func update(c *gin.Context) {
 		svc := xmp_api_structs.Service{}
 		err := json.Unmarshal([]byte(req.Data), &svc)
 		if err != nil {
-			log.Error("Handlers: Update: ", err)
+			log.WithFields(log.Fields{
+				"prefix": "XMPAPI",
+			}).Error(
+				"Update: ",
+				err.Error(),
+			)
 		}
 
-		log.Info("SMSOnContent: ", svc.SMSOnContent)
+		log.WithFields(log.Fields{
+			"prefix": "XMPAPI",
+			"type":   req.Type,
+		}).Info(svc.Id)
 
-		log.Info("Update Service: ", svc.Id)
 		ChanServices <- svc
 	}
 
-	log.Info("Update OK")
+	if req.Type == "campaign.new" || req.Type == "campaign.update" {
+		campaign := xmp_api_structs.Campaign{}
+		err := json.Unmarshal([]byte(req.Data), &campaign)
+		if err != nil {
+			log.Error("Update: ", err)
+		}
+
+		log.WithFields(log.Fields{
+			"prefix": "XMPAPI",
+			"type":   req.Type,
+		}).Info(campaign.Id)
+
+		ChanCampaigns <- campaign
+	}
+
+	log.WithFields(log.Fields{
+		"prefix": "XMPAPI",
+		"type":   req.Type,
+	}).Info("Update OK")
+
 	c.JSON(
 		200,
 		gin.H{
 			"message": "ok",
 		},
 	)
-}
-
-type UpdateRequest struct {
-	Type string `json:"type"`
-	For  string `json:"for"`
-	Data string `json:"data"`
 }

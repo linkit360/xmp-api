@@ -28,20 +28,28 @@ func Initialization(c *gin.Context) {
 			// Load Services for instance
 			out.Services, err = base.GetServices(id_provider)
 			if err != nil {
-				out.Ok = false
 				out.Error = err.Error()
-				out.Services = nil
+			}
+
+			if len(out.Services) > 0 {
+				// Load Campaigns for instance
+				out.Campaigns, err = base.GetCampaigns(out.Services)
+				if err != nil {
+					out.Error = err.Error()
+				}
 			}
 		} else {
-			out.Ok = false
 			out.Error = "Status not 1"
 		}
 	} else {
-		out.Ok = false
 		out.Error = "Provider not found"
 	}
 
 	if out.Error != "" {
+		out.Campaigns = nil
+		out.Services = nil
+
+		out.Ok = false
 		out.Error = "Init: " + out.Error
 	}
 

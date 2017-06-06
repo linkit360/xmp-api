@@ -33,29 +33,29 @@ func GetWsData() (map[string]uint64, map[string]string, uint64, uint64, uint64) 
 
 	// map
 	rows, err = db.Raw(
-		"SELECT " +
-			"c.iso, p.name, p.id " +
-			"FROM xmp_providers as p " +
-			"INNER JOIN xmp_countries as c " +
-			"ON (p.id_country = c.id);",
+		"SELECT" +
+		//"p.name," +
+			"(SELECT i.id FROM xmp_instances AS i WHERE p.id = i.id_provider) AS instance_id, " +
+			"(SELECT c.iso FROM xmp_countries AS c WHERE c.id = p.id_country) AS country " +
+			"FROM " +
+			"xmp_providers AS p;",
 	).Rows()
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	var iso string
-	var prov string
-	var id uint64
+	var instance string
 
 	var provs = make(map[string]string)
 	for rows.Next() {
 		rows.Scan(
+			//&prov,
+			&instance,
 			&iso,
-			&prov,
-			&id,
 		)
 
-		provs[prov] = iso
+		provs[instance] = iso
 	}
 
 	// TODO: providers by id_instance
@@ -69,6 +69,7 @@ func GetWsData() (map[string]uint64, map[string]string, uint64, uint64, uint64) 
 		log.Fatal(err)
 	}
 
+	var prov string
 	var sum uint64
 	var countries = map[string]uint64{}
 	for rows.Next() {
