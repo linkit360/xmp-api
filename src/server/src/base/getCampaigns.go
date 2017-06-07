@@ -15,7 +15,7 @@ func GetCampaigns(services map[string]xmp_api_structs.Service) (map[string]xmp_a
 	}
 
 	// Get campaigns by services ids
-	db.Where("id_service in (?)", serviceIds).Find(&data)
+	db.Where("status = 1 AND id_service in (?)", serviceIds).Find(&data)
 	for _, campaign := range data {
 		out[campaign.Id] = campaign
 	}

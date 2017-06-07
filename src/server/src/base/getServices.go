@@ -12,7 +12,7 @@ func GetServices(id_provider int) (map[string]xmp_api_structs.Service, error) {
 	data := make([]xmp_api_structs.Service, 0)
 
 	// Get services by provider id
-	db.Where("id_provider = ?", id_provider).Find(&data)
+	db.Where("status = 1 AND id_provider = ?", id_provider).Find(&data)
 	for _, service := range data {
 		// Provider specific options
 		provOpts := xmp_api_structs.ProviderOpts{}
@@ -41,7 +41,7 @@ func GetServices(id_provider int) (map[string]xmp_api_structs.Service, error) {
 		service.ContentIdsJson = ""
 		service.Contents = make([]xmp_api_structs.Content, 0)
 
-		db.Where("id IN (?)", contentIds).Find(&service.Contents)
+		db.Where("status = 1 AND id IN (?)", contentIds).Find(&service.Contents)
 
 		// Append to return
 		out[service.Id] = service
