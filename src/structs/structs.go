@@ -10,12 +10,6 @@ type HandShake struct {
 	Pixels    []PixelSetting      `json:"pixel,omitempty"`     //
 }
 
-type Operator struct {
-	Name        string // mobiilnk
-	Code        int64  // mcc mnc: 41001
-	CountryName string // pakistan
-}
-
 type PixelSetting struct {
 	Id           string
 	CampaignCode string
