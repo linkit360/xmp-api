@@ -90,7 +90,7 @@ func runClient() {
 	//}
 	//testAggregate()
 
-	testUpdateRead()
+	//testUpdateRead()
 
 	//for {
 	//	time.Sleep(3 * time.Second)
@@ -181,6 +181,8 @@ func testInitialization() {
 			"services": len(resp.Services),
 		},
 	).Info("Request Done")
+
+	//log.Info(resp.Operators[2])
 }
 
 func testUpdateRead() {

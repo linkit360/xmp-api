@@ -38,6 +38,12 @@ func Initialization(c *gin.Context) {
 					out.Error = err.Error()
 				}
 			}
+
+			// Load Operators for instance
+			out.Operators, err = base.GetOperators(id_provider)
+			if err != nil {
+				out.Error = err.Error()
+			}
 		} else {
 			out.Error = "Status not 1"
 		}
