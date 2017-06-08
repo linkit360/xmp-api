@@ -40,8 +40,8 @@ func Initialization(c *gin.Context) {
 				out.Error = "No Services"
 			}
 
-			// Load Operators for instance
-			out.Operators, err = base.GetOperators(id_provider)
+			// Load Country for instance
+			out.Country, err = base.GetCountry(id_provider)
 			if err != nil {
 				out.Error = err.Error()
 			}
