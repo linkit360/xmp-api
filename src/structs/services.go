@@ -1,15 +1,15 @@
 package xmp_api_structs
 
 type Service struct {
-	Id              string    `gorm:"primary_key",json:"id"`         // UUID
-	Code            string    `gorm:"column:id_service",json:"code"` // previous service id
+	Id              string    `gorm:"primary_key" json:"id"`         // UUID
+	Code            string    `gorm:"column:id_service" json:"code"` // previous service id
 	Title           string    `json:"title"`                         //
 	Description     string    `json:"description,omitempty"`         //
 	Price           int       `json:"price"`                         // In cents
 	ContentIds      []string  `json:"content_ids,omitempty"`         // Unmarshalled content ids for use in content service (platform)
 	Contents        []Content `json:"contents,omitempty"`            // Contents of service, unmarshalled and ready for use in platform
-	ServiceOptsJson string    `gorm:"column:service_opts",json:"-"`  // taken from jsonb (database)
-	ContentIdsJson  string    `gorm:"column:id_content",json:"-"`    // taken from jsonb (database)
+	ServiceOptsJson string    `gorm:"column:service_opts" json:"-"`  // taken from jsonb (database)
+	ContentIdsJson  string    `gorm:"column:id_content" json:"-"`    // taken from jsonb (database)
 	Status          int       `json:"status"`                        // Status, 1 = ok, 0 = deleted
 	ProviderOpts
 }
@@ -37,9 +37,9 @@ type ProviderOpts struct {
 }
 
 type Content struct {
-	Id    string `gorm:"primary_key",json:"id"`       // UUID (name of file in S3)
+	Id    string `gorm:"primary_key" json:"id"`       // UUID (name of file in S3)
 	Title string `json:"title"`                       // Title (for logs and humans)
-	Name  string `gorm:"column:filename",json:"name"` // Name (filename inside zip)
+	Name  string `gorm:"column:filename" json:"name"` // Name (filename inside zip)
 }
 
 // Tablenames for GORM
