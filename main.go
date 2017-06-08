@@ -182,7 +182,7 @@ func testInitialization() {
 		},
 	).Info("Request Done")
 
-	log.Info(resp.Country.Name)
+	log.Info(resp.BlackList)
 }
 
 func testUpdateRead() {
