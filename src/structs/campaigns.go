@@ -8,6 +8,7 @@ type Campaign struct {
 	Lp               string `json:"lp"`                                  // UUID
 	Hash             string `json:"hash,omitempty"`                      //
 	ServiceId        string `gorm:"column:id_service",json:"id_service"` // service ID / UUID
+	ServiceCode      string `json:"service_code"`                        //
 	AutoClickRatio   int64  `json:"auto_click_ratio,omitempty"`          //
 	AutoClickEnabled bool   `json:"auto_click_enabled,omitempty"`        //
 	PageSuccess      string `json:"page_success,omitempty"`              //
