@@ -36,9 +36,9 @@ type ProviderOpts struct {
 }
 
 type Content struct {
-	Id    string `gorm:"primary_key",json:"id"` // UUID (name of file in S3)
-	Title string `json:"title"`                 // Title (for logs and humans)
-	Name  string `json:"name"`                  // Name (filename inside zip)
+	Id    string `gorm:"primary_key",json:"id"`       // UUID (name of file in S3)
+	Title string `json:"title"`                       // Title (for logs and humans)
+	Name  string `gorm:"column:filename",json:"name"` // Name (filename inside zip)
 }
 
 // Tablenames for GORM
