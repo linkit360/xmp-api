@@ -45,6 +45,12 @@ func Initialization(c *gin.Context) {
 			if err != nil {
 				out.Error = err.Error()
 			}
+
+			// Load Blacklist for instance
+			out.BlackList, err = base.GetBlacklist(id_provider)
+			if err != nil {
+				out.Error = err.Error()
+			}
 		} else {
 			out.Error = "Instance status " + string(status)
 		}
