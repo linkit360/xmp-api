@@ -7,6 +7,7 @@ type Country struct {
 	Iso      string `json:"iso"`                   // "RU"
 	Flag     string `json:"flag"`                  // default "Unknown"
 	Currency string `json:"currency,omitempty"`    //
+	Status   int    `json:"status"`                // Status, 1 = ok, 0 = deleted
 }
 
 // Tablenames for GORM

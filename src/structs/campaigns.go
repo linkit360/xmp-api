@@ -14,6 +14,7 @@ type Campaign struct {
 	PageError        string `json:"page_error,omitempty"`                //
 	PageThankYou     string `json:"page_thank_you,omitempty"`            //
 	PageWelcome      string `json:"page_welcome,omitempty"`              //
+	Status           int    `json:"status"`                              // Status, 1 = ok, 0 = deleted
 }
 
 // Tablenames for GORM

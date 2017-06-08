@@ -10,6 +10,7 @@ type Service struct {
 	Contents        []Content `json:"contents,omitempty"`            // Contents of service, unmarshalled and ready for use in platform
 	ServiceOptsJson string    `gorm:"column:service_opts",json:"-"`  // taken from jsonb (database)
 	ContentIdsJson  string    `gorm:"column:id_content",json:"-"`    // taken from jsonb (database)
+	Status          int       `json:"status"`                        // Status, 1 = ok, 0 = deleted
 	ProviderOpts
 }
 
