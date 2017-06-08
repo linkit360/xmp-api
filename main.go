@@ -182,7 +182,7 @@ func testInitialization() {
 		},
 	).Info("Request Done")
 
-	//log.Info(resp.Services["c4bc3983-648c-45f9-a5b3-e1f6aa82db90"].Code)
+	log.Info(resp.Country.Name)
 }
 
 func testUpdateRead() {
