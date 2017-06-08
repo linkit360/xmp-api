@@ -90,7 +90,7 @@ func runClient() {
 	//}
 	//testAggregate()
 
-	//testUpdateRead()
+	testUpdateRead()
 
 	//for {
 	//	time.Sleep(3 * time.Second)
@@ -182,12 +182,12 @@ func testInitialization() {
 		},
 	).Info("Request Done")
 
-	log.Info(resp.BlackList)
+	//log.Info(resp.Campaigns["373bfcb3-f967-4860-96da-39637856f67b"].ServiceId)
 }
 
 func testUpdateRead() {
 	for {
-		v := <-xmp_api_client.ChanServices
-		log.Info("UpdateTest: ", v.Id)
+		v := <-xmp_api_client.ChanCampaigns
+		log.Info("UpdateTest: ", v.Code)
 	}
 }
