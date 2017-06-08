@@ -183,9 +183,7 @@ func testInitialization() {
 	).Info("Request Done")
 
 	//log.Info("TEST! ", resp.Campaigns["373bfcb3-f967-4860-96da-39637856f67b"].Lp)
-
-	//fmt.Printf("%#v", resp.Campaigns["6924c604-9bc1-4e6a-8daf-807e8068aacc"])
-
+	//fmt.Printf("%#v", resp.Operators)
 }
 
 func testUpdateRead() {
