@@ -34,7 +34,6 @@ func GetWsData() (map[string]uint64, map[string]string, uint64, uint64, uint64) 
 	// map
 	rows, err = db.Raw(
 		"SELECT" +
-		//"p.name," +
 			"(SELECT i.id FROM xmp_instances AS i WHERE p.id = i.id_provider) AS instance_id, " +
 			"(SELECT c.iso FROM xmp_countries AS c WHERE c.id = p.id_country) AS country " +
 			"FROM " +
@@ -59,7 +58,7 @@ func GetWsData() (map[string]uint64, map[string]string, uint64, uint64, uint64) 
 	}
 
 	// TODO: providers by id_instance
-	rows, err = db.Raw(
+	rows, err = db.Debug().Raw(
 		"SELECT id_instance, SUM(lp_hits) " +
 			"FROM xmp_reports " +
 			"WHERE report_at >= '" + time.Now().Format("2006-01-02") + "' " +
@@ -78,7 +77,9 @@ func GetWsData() (map[string]uint64, map[string]string, uint64, uint64, uint64) 
 			&sum,
 		)
 
-		countries[provs[prov]] = sum
+		if provs[prov] != "" {
+			countries[provs[prov]] = countries[provs[prov]] + sum
+		}
 	}
 
 	defer rows.Close()
