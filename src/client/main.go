@@ -19,7 +19,6 @@ var (
 	config        ClientConfig
 	ChanServices  chan xmp_api_structs.Service
 	ChanCampaigns chan xmp_api_structs.Campaign
-	ChanBlacklist chan xmp_api_structs.Blacklist
 )
 
 type ClientConfig struct {
@@ -32,7 +31,6 @@ type ClientConfig struct {
 func init() {
 	ChanServices = make(chan xmp_api_structs.Service)
 	ChanCampaigns = make(chan xmp_api_structs.Campaign)
-	ChanBlacklist = make(chan xmp_api_structs.Blacklist)
 }
 
 func Init(clientConf ClientConfig) error {
