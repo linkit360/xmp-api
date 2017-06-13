@@ -6,8 +6,9 @@ import (
 	"time"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/linkit360/xmp-api/src/structs"
 	"gopkg.in/gin-gonic/gin.v1"
+
+	"github.com/linkit360/xmp-api/src/structs"
 )
 
 type UpdateRequest struct {
