@@ -4,10 +4,11 @@ import (
 	"os"
 
 	log "github.com/sirupsen/logrus"
+	"github.com/x-cray/logrus-prefixed-formatter"
+
 	"github.com/linkit360/xmp-api/src/client"
 	"github.com/linkit360/xmp-api/src/server"
 	"github.com/linkit360/xmp-api/src/structs"
-	"github.com/x-cray/logrus-prefixed-formatter"
 )
 
 func main() {
@@ -39,10 +40,11 @@ func runServer() {
 func runClient() {
 	log.Info("Testing client")
 	cfg := xmp_api_client.ClientConfig{
-		Enabled:    true,
-		DSN:        "go:50318",
-		Timeout:    10,
-		InstanceId: "a7da1e9f-fcc1-4087-9c58-4d31bcdbd515",
+		Enabled: true,
+		DSN:     "go:50318",
+		Timeout: 10,
+		//InstanceId: "a7da1e9f-fcc1-4087-9c58-4d31bcdbd515", // qrtech
+		InstanceId: "58fbedf7-1abc-402b-8c2a-89fe256d32d9", // mobilink
 	}
 
 	if err := xmp_api_client.Init(cfg); err != nil {
@@ -50,96 +52,9 @@ func runClient() {
 	}
 	log.Info("Ready")
 
-	/*
-		// AWS S3
-		sess, err := session.NewSession(&aws.Config{
-			Region: aws.String("ap-southeast-1"),
-			Credentials: credentials.NewStaticCredentials(
-				"AKIAILRGTUB6EBNVUPFA",
-				"8Hf/b4jldspVA2hCUlBqAJhmpCjr7M1zAU/LYjrl",
-				"",
-			),
-		})
-		if err != nil {
-			log.Error("Cannot init S3 Session ", err)
-		}
-
-		svc := s3.New(sess)
-
-		ctx := context.Background()
-
-		result, err := svc.GetObjectWithContext(ctx, &s3.GetObjectInput{
-			Bucket: aws.String("xmp-lp"),
-			Key:    aws.String("31788279-604c-416f-868c-c96dbdbe3e3c"),
-		})
-		if err != nil {
-			log.Error("Cannot init S3 Client ", err)
-		}
-
-		defer result.Body.Close()
-
-		log.Info("Object Etag: ", aws.StringValue(result.ETag))
-
-		return
-	*/
-
-	//for {
-	// instance doing his work (wait)
 	testInitialization()
-	//time.Sleep(3 * time.Second)
-	//}
-	testAggregate()
-
-	testUpdateRead()
-
-	//for {
-	//	time.Sleep(3 * time.Second)
-	//}
-
-	/*
-		// Get BL All
-		data, err := acceptorClient.GetBlackListed("cheese")
-		if err != nil {
-			log.Println("Error")
-			log.Fatalln(err.Error())
-		}
-
-		log.Println("DATA")
-		log.Printf("%+v\n", data)
-
-		// Get BL Time
-		data, err = acceptor_client.BlackListGetNew("cheese", "2000-01-01")
-		if err != nil {
-			log.Println("Error")
-			log.Fatalln(err.Error())
-		}
-
-		log.Println("DATA")
-		log.Printf("%+v\n", data)
-
-		// Send Aggregate
-		data2 := []acceptor.Aggregate{
-			acceptor_client.GetRandomAggregate(),
-		}
-
-		//log.Println(data)
-		resp, err := acceptor_client.SendAggregatedData(data2)
-		if err != nil {
-			log.Println("Error")
-			log.Println(err.Error())
-		}
-
-		log.Println(resp)
-
-		data, err := acceptor_client.CampaignsGet("cheese")
-		if err != nil {
-			log.Println("Error")
-			log.Fatalln(err.Error())
-		}
-
-		log.Println("DATA")
-		log.Printf("%+v\n", data)
-	*/
+	//testAggregate()
+	//testUpdateRead()
 }
 
 func testAggregate() {
@@ -175,10 +90,12 @@ func testInitialization() {
 
 	log.WithFields(
 		log.Fields{
-			"prefix":   "testInitialization",
-			"ok":       resp.Ok,
-			"error":    resp.Error,
-			"services": len(resp.Services),
+			"prefix":    "testInitialization",
+			"ok":        resp.Ok,
+			"error":     resp.Error,
+			"campaigns": len(resp.Campaigns),
+			"services":  len(resp.Services),
+			"blacklist": resp.BlackList,
 		},
 	).Info("Request Done")
 

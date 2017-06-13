@@ -7,6 +7,6 @@ type HandShake struct {
 	Services  map[string]Service  `json:"services,omitempty"`  // map by uuid
 	Campaigns map[string]Campaign `json:"campaigns,omitempty"` // map by uuid
 	Operators map[int64]Operator  `json:"operators,omitempty"` // map by anything
-	BlackList []string            `json:"blacklist,omitempty"` // array of blacklisted numbers
+	BlackList string              `json:"blacklist,omitempty"` // link to zipfile
 	Pixels    []PixelSetting      `json:"pixel,omitempty"`     //
 }

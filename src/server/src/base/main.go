@@ -3,8 +3,8 @@ package base
 import (
 	"fmt"
 
-	log "github.com/sirupsen/logrus"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	log "github.com/sirupsen/logrus"
 	"github.com/x-cray/logrus-prefixed-formatter"
 	"gopkg.in/jinzhu/gorm.v1"
 
@@ -12,6 +12,7 @@ import (
 )
 
 var cfg config.DbConfig
+var cfgAws config.AwsConfig
 var db *gorm.DB
 var ChanUpdate chan UpdateCall
 
@@ -23,7 +24,7 @@ func Init() {
 	log.SetFormatter(new(prefixed.TextFormatter))
 	log.SetLevel(log.DebugLevel)
 	var err error
-	cfg = config.LoadConfig()
+	cfg, cfgAws = config.LoadConfig()
 
 	connstr := fmt.Sprintf(
 		"host=%s user=%s dbname=%s sslmode=disable password=%s",
