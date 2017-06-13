@@ -6,7 +6,7 @@ import (
 	"time"
 
 	log "github.com/Sirupsen/logrus"
-	xmp_api_structs "github.com/linkit360/xmp-api/src/structs"
+	"github.com/linkit360/xmp-api/src/structs"
 	"gopkg.in/gin-gonic/gin.v1"
 )
 
