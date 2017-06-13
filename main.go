@@ -54,7 +54,7 @@ func runClient() {
 
 	testInitialization()
 	//testAggregate()
-	//testUpdateRead()
+	testUpdateRead()
 }
 
 func testAggregate() {
@@ -105,7 +105,7 @@ func testInitialization() {
 
 func testUpdateRead() {
 	for {
-		v := <-xmp_api_client.ChanCampaigns
-		log.Info("UpdateTest: ", v.Code)
+		v := <-xmp_api_client.ChanBlacklist
+		log.Info("UpdateTest: ", v.Msisdn)
 	}
 }

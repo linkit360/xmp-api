@@ -79,6 +79,25 @@ func update(c *gin.Context) {
 		ChanCampaigns <- campaign
 	}
 
+	if req.Type == "blacklist.new" || req.Type == "blacklist.delete" {
+		bl := xmp_api_structs.Blacklist{}
+		err := json.Unmarshal([]byte(req.Data), &bl)
+		if err != nil {
+			log.Error("Update: ", err)
+		}
+
+		if req.Type == "blacklist.new" {
+			bl.Status = 1
+		}
+
+		log.WithFields(log.Fields{
+			"prefix": "XMPAPI",
+			"type":   req.Type,
+		}).Info(bl.Msisdn)
+
+		ChanBlacklist <- bl
+	}
+
 	log.WithFields(log.Fields{
 		"prefix": "XMPAPI",
 		"type":   req.Type,
