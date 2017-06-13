@@ -19,7 +19,9 @@ type UpdateRequest struct {
 
 func GetRandomAggregate() xmp_api_structs.Aggregate {
 	return xmp_api_structs.Aggregate{
-		InstanceId:             "a7da1e9f-fcc1-4087-9c58-4d31bcdbd515",
+		//InstanceId: "a7da1e9f-fcc1-4087-9c58-4d31bcdbd515", // qrtech
+		InstanceId: "58fbedf7-1abc-402b-8c2a-89fe256d32d9", // mobilink
+
 		ReportAt:               time.Now().UTC().Unix(),
 		CampaignCode:           "290",
 		OperatorCode:           52000,

@@ -29,9 +29,9 @@ func GetBlacklist(id_provider int) (string, error) {
 
 	// ZIP
 	filename := strconv.Itoa(id_provider) + "_" + time.Now().Format("20060102150405")
-	defer os.Remove(filename)
+	defer os.Remove("/tmp/" + filename)
 
-	zipfile, err := os.Create(filename)
+	zipfile, err := os.Create("/tmp/" + filename)
 	if err != nil {
 		return "", err
 	}
