@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	log "github.com/Sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 	"github.com/linkit360/xmp-api/src/client"
 	"github.com/linkit360/xmp-api/src/server"
 	"github.com/linkit360/xmp-api/src/structs"

@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	log "github.com/Sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 	"github.com/linkit360/xmp-api/src/structs"
 	"github.com/x-cray/logrus-prefixed-formatter"
 	"gopkg.in/gin-gonic/gin.v1"

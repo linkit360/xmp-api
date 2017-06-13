@@ -3,7 +3,7 @@ package base
 import (
 	"time"
 
-	log "github.com/Sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 )
 
 func GetWsData() (map[string]uint64, map[string]string, uint64, uint64, uint64) {

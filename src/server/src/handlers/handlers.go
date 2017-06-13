@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	log "github.com/Sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 )
 
 var Clients map[string]string

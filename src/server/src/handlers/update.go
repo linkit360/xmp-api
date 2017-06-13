@@ -3,7 +3,7 @@ package handlers
 import (
 	"encoding/json"
 
-	log "github.com/Sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 	"github.com/linkit360/xmp-api/src/server/src/base"
 )
 

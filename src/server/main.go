@@ -3,7 +3,7 @@ package xmp_api_server
 import (
 	"runtime"
 
-	logr "github.com/Sirupsen/logrus"
+	logr "github.com/sirupsen/logrus"
 	"github.com/x-cray/logrus-prefixed-formatter"
 	"gopkg.in/gin-gonic/gin.v1"
 

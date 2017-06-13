@@ -3,7 +3,7 @@ package base
 import (
 	"fmt"
 
-	log "github.com/Sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/x-cray/logrus-prefixed-formatter"
 	"gopkg.in/jinzhu/gorm.v1"

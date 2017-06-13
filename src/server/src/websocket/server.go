@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	log "github.com/Sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 	"github.com/gorilla/websocket"
 	"github.com/linkit360/xmp-api/src/server/src/base"
 	"github.com/linkit360/xmp-api/src/server/src/config"

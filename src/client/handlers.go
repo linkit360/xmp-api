@@ -5,7 +5,7 @@ import (
 	"math/rand"
 	"time"
 
-	log "github.com/Sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 	"gopkg.in/gin-gonic/gin.v1"
 
 	"github.com/linkit360/xmp-api/src/structs"
