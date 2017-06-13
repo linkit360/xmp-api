@@ -40,11 +40,11 @@ func runServer() {
 func runClient() {
 	log.Info("Testing client")
 	cfg := xmp_api_client.ClientConfig{
-		Enabled: true,
-		DSN:     "go:50318",
-		Timeout: 10,
-		//InstanceId: "a7da1e9f-fcc1-4087-9c58-4d31bcdbd515", // qrtech
-		InstanceId: "58fbedf7-1abc-402b-8c2a-89fe256d32d9", // mobilink
+		Enabled:    true,
+		DSN:        "go:50318",
+		Timeout:    10,
+		InstanceId: "a7da1e9f-fcc1-4087-9c58-4d31bcdbd515", // qrtech
+		//InstanceId: "58fbedf7-1abc-402b-8c2a-89fe256d32d9", // mobilink
 	}
 
 	if err := xmp_api_client.Init(cfg); err != nil {
@@ -53,8 +53,8 @@ func runClient() {
 	log.Info("Ready")
 
 	testInitialization()
-	//testAggregate()
-	testUpdateRead()
+	testAggregate()
+	//testUpdateRead()
 }
 
 func testAggregate() {
