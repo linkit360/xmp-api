@@ -5,9 +5,10 @@ import (
 
 	log "github.com/Sirupsen/logrus"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
-	"github.com/linkit360/xmp-api/src/server/src/config"
 	"github.com/x-cray/logrus-prefixed-formatter"
 	"gopkg.in/jinzhu/gorm.v1"
+
+	"github.com/linkit360/xmp-api/src/server/src/config"
 )
 
 var cfg config.DbConfig
