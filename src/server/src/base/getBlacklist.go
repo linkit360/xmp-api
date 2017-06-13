@@ -3,19 +3,15 @@ package base
 import (
 	"archive/zip"
 	"context"
-	"fmt"
 	"os"
 	"strconv"
 	"strings"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/credentials"
-	"github.com/aws/aws-sdk-go/aws/request"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
-	log "github.com/sirupsen/logrus"
 
 	"github.com/linkit360/xmp-api/src/structs"
 )
@@ -37,24 +33,24 @@ func GetBlacklist(id_provider int) (string, error) {
 
 	zipfile, err := os.Create(filename)
 	if err != nil {
-		log.Error(err)
+		return "", err
 	}
 	defer zipfile.Close()
 
 	w := zip.NewWriter(zipfile)
 	f, err := w.Create("blacklist")
 	if err != nil {
-		log.Error(err)
+		return "", err
 	}
 
 	_, err = f.Write([]byte(text))
 	if err != nil {
-		log.Error(err)
+		return "", err
 	}
 
 	err = w.Close()
 	if err != nil {
-		log.Error(err)
+		return "", err
 	}
 
 	// AWS S3
@@ -67,7 +63,7 @@ func GetBlacklist(id_provider int) (string, error) {
 		),
 	})
 	if err != nil {
-		log.Error("Cannot init S3 Session ", err)
+		return "", err
 	}
 
 	svc := s3.New(sess)
@@ -79,13 +75,7 @@ func GetBlacklist(id_provider int) (string, error) {
 		Body:   zipfile,
 	})
 	if err != nil {
-		if aerr, ok := err.(awserr.Error); ok && aerr.Code() == request.CanceledErrorCode {
-			// If the SDK can determine the request or retry delay was canceled
-			// by a context the CanceledErrorCode error code will be returned.
-			fmt.Fprintf(os.Stderr, "upload canceled due to timeout, %v\n", err)
-		} else {
-			fmt.Fprintf(os.Stderr, "failed to upload object, %v\n", err)
-		}
+		return "", err
 	}
 
 	return filename, nil

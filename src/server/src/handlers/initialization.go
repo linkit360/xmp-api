@@ -44,19 +44,19 @@ func Initialization(c *gin.Context) {
 			// Load Country for instance
 			out.Country, err = base.GetCountry(id_provider)
 			if err != nil {
-				out.Error = err.Error()
+				out.Error = "Country: " + err.Error()
 			}
 
 			// Load Blacklist for instance
 			out.BlackList, err = base.GetBlacklist(id_provider)
 			if err != nil {
-				out.Error = err.Error()
+				out.Error = "BlackList: " + err.Error()
 			}
 
 			// Load Blacklist for instance
 			out.Operators, err = base.GetOperators(id_provider)
 			if err != nil {
-				out.Error = err.Error()
+				out.Error = "Operators: " + err.Error()
 			}
 		} else {
 			out.Error = "Instance status " + string(status)
