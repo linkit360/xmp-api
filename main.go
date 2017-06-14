@@ -53,7 +53,7 @@ func runClient() {
 	log.Info("Ready")
 
 	testInitialization()
-	testAggregate()
+	//testAggregate()
 	//testUpdateRead()
 }
 
@@ -99,13 +99,13 @@ func testInitialization() {
 		},
 	).Info("Request Done")
 
-	//log.Info("TEST! ", resp.Campaigns["373bfcb3-f967-4860-96da-39637856f67b"].Lp)
+	//log.Info("TEST! ", resp.Campaigns["373bfcb3-f967-4860-96da-39637856f67b"].AutoClickRatio)
 	//fmt.Printf("%#v", resp.Operators)
 }
 
 func testUpdateRead() {
 	for {
-		v := <-xmp_api_client.ChanBlacklist
-		log.Info("UpdateTest: ", v.Msisdn)
+		v := <-xmp_api_client.ChanCampaigns
+		log.Info("UpdateTest: ", v.AutoClickEnabled)
 	}
 }
