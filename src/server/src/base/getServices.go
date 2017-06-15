@@ -2,6 +2,9 @@ package base
 
 import (
 	"encoding/json"
+	"strconv"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/linkit360/xmp-api/src/structs"
 )
@@ -13,7 +16,13 @@ func GetServices(id_provider int) (map[string]xmp_api_structs.Service, error) {
 
 	// Get services by provider id
 	db.Debug().Where("status = 1 AND id_provider = ?", id_provider).Find(&data)
+
+	log.Info("SVC 1: " + strconv.Itoa(len(data)))
+
 	for _, service := range data {
+
+		log.Info("SVC 2: " + service.Id)
+
 		// Provider specific options
 		provOpts := xmp_api_structs.ProviderOpts{}
 		err = json.Unmarshal([]byte(service.ServiceOptsJson), &provOpts)
@@ -43,9 +52,12 @@ func GetServices(id_provider int) (map[string]xmp_api_structs.Service, error) {
 
 		db.Where("status = 1 AND id IN (?)", contentIds).Find(&service.Contents)
 
+		log.Info("SVC 3: " + strconv.Itoa(len(service.Contents)))
+
 		// Append to return
 		out[service.Id] = service
 	}
+	log.Info("SVC 4: " + strconv.Itoa(len(out)))
 
 	return out, nil
 }
