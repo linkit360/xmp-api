@@ -26,28 +26,30 @@ func GetServices(id_provider int) (out map[string]xmp_api_structs.Service, err e
 	log.Info("SVC 1: " + strconv.Itoa(len(data)))
 
 	for _, service := range data {
-
 		log.Info("SVC 2: " + service.Id)
+		log.Info("SVC 2.0: " + service.ServiceOptsJson)
 
 		// Provider specific options
-		provOpts := xmp_api_structs.ProviderOpts{}
-		err = json.Unmarshal([]byte(service.ServiceOptsJson), &provOpts)
-		if err != nil {
-			return
-		}
-		service.ServiceOptsJson = ""
+		if service.ServiceOptsJson != "" {
+			provOpts := xmp_api_structs.ProviderOpts{}
+			err = json.Unmarshal([]byte(service.ServiceOptsJson), &provOpts)
+			if err != nil {
+				return
+			}
+			service.ServiceOptsJson = ""
 
-		var provOptsTmp []byte
-		provOptsTmp, err = json.Marshal(provOpts)
-		if err != nil {
-			return
-		}
+			var provOptsTmp []byte
+			provOptsTmp, err = json.Marshal(provOpts)
+			if err != nil {
+				return
+			}
 
-		log.Info("SVC 2.1: " + string(provOptsTmp))
+			log.Info("SVC 2.1: " + string(provOptsTmp))
 
-		err = json.Unmarshal(provOptsTmp, &service.ProviderOpts)
-		if err != nil {
-			return
+			err = json.Unmarshal(provOptsTmp, &service.ProviderOpts)
+			if err != nil {
+				return
+			}
 		}
 
 		// Content
