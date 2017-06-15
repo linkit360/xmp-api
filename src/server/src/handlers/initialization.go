@@ -15,27 +15,24 @@ func Initialization(c *gin.Context) {
 	out.Ok = true
 	out.Error = ""
 
-	log.Info("Call Initialization: " + instance_id)
-
 	status, id_provider := base.GetOptions(instance_id)
 	if id_provider > 0 {
 		// Found instance
 		if status == 1 {
 			// save client
 			Clients[instance_id] = c.ClientIP()
-			log.Info("Initialization: " + instance_id + ": " + Clients[instance_id])
 
 			// Load Services for instance
 			out.Services, err = base.GetServices(id_provider)
 			if err != nil {
-				out.Error = err.Error()
+				out.Error = "Services: " + err.Error()
 			}
 
 			if len(out.Services) > 0 {
 				// Load Campaigns for instance
 				out.Campaigns, err = base.GetCampaigns(out.Services)
 				if err != nil {
-					out.Error = err.Error()
+					out.Error = "Campaigns: " + err.Error()
 				}
 			} else {
 				out.Error = "No Services"
@@ -71,6 +68,14 @@ func Initialization(c *gin.Context) {
 
 		out.Ok = false
 		out.Error = "Init: " + out.Error
+
+		log.Error("Initialization Error: " + out.Error)
+	} else {
+		log.Info("Initialization | iid: " + instance_id +
+			" | provider: " + string(id_provider) +
+			" | svc: " + string(len(out.Services)) +
+			" | camp: " + string(len(out.Campaigns)) +
+			" | ip: " + Clients[instance_id])
 	}
 
 	c.JSON(
