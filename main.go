@@ -42,8 +42,9 @@ func runClient() {
 	cfg := xmp_api_client.ClientConfig{
 		Enabled:    true,
 		DSN:        "go:50318",
+		ClientPort: 50319,
 		Timeout:    10,
-		InstanceId: "a7da1e9f-fcc1-4087-9c58-4d31bcdbd515", // qrtech
+		InstanceId: "ecbe1211-3b1e-4c91-96fc-574dc979668a", // qrtech
 		//InstanceId: "58fbedf7-1abc-402b-8c2a-89fe256d32d9", // mobilink
 	}
 
@@ -54,31 +55,7 @@ func runClient() {
 
 	testInitialization()
 	//testAggregate()
-	//testUpdateRead()
-}
-
-func testAggregate() {
-	var resp struct {
-		Ok    bool   `json:"ok,omitempty"`
-		Error string `json:"error,omitempty"`
-	}
-
-	items := make([]interface{}, 0)
-	items = append(items, xmp_api_client.GetRandomAggregate())
-	//items = append(items, xmp_api_client.GetRandomAggregate())
-
-	err := xmp_api_client.Call("aggregate", &resp, items...)
-	if err != nil {
-		log.Error(err)
-	}
-
-	log.WithFields(
-		log.Fields{
-			"prefix": "testAggregate",
-			"ok":     resp.Ok,
-			"error":  resp.Error,
-		},
-	).Info("Request Done")
+	testUpdateRead()
 }
 
 func testInitialization() {
@@ -106,6 +83,30 @@ func testInitialization() {
 func testUpdateRead() {
 	for {
 		v := <-xmp_api_client.ChanCampaigns
-		log.Info("UpdateTest: ", v.AutoClickEnabled)
+		log.Info("UpdateTest: ", v.Id)
 	}
+}
+
+func testAggregate() {
+	var resp struct {
+		Ok    bool   `json:"ok,omitempty"`
+		Error string `json:"error,omitempty"`
+	}
+
+	items := make([]interface{}, 0)
+	items = append(items, xmp_api_client.GetRandomAggregate())
+	//items = append(items, xmp_api_client.GetRandomAggregate())
+
+	err := xmp_api_client.Call("aggregate", &resp, items...)
+	if err != nil {
+		log.Error(err)
+	}
+
+	log.WithFields(
+		log.Fields{
+			"prefix": "testAggregate",
+			"ok":     resp.Ok,
+			"error":  resp.Error,
+		},
+	).Info("Request Done")
 }

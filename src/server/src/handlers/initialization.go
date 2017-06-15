@@ -13,16 +13,21 @@ import (
 func Initialization(c *gin.Context) {
 	var err error
 	var instance_id string = c.Query("instance_id")
+	var port string = c.Query("port")
 	var out xmp_api_structs.HandShake
 	out.Ok = true
 	out.Error = ""
+
+	if port == "0" {
+		out.Error = "Client Port: 0"
+	}
 
 	status, id_provider := base.GetOptions(instance_id)
 	if id_provider > 0 {
 		// Found instance
 		if status == 1 {
 			// save client
-			Clients[instance_id] = c.ClientIP()
+			Clients[instance_id] = c.ClientIP() + ":" + port
 
 			// Load Services for instance
 			out.Services, err = base.GetServices(id_provider)

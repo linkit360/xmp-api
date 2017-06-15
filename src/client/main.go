@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 	"time"
 
 	log "github.com/sirupsen/logrus"
@@ -26,6 +27,7 @@ var (
 type ClientConfig struct {
 	Enabled    bool   `yaml:"enabled"`
 	DSN        string `default:":50318" yaml:"dsn"`
+	ClientPort int    `default:"50319" yaml:"client_port"`
 	Timeout    int    `default:"10" yaml:"timeout"`
 	InstanceId string `default:"" yaml:"instance_id"`
 }
@@ -57,7 +59,7 @@ func runGin() {
 	r.POST("/update", update)
 
 	// use config
-	r.Run(":50319")
+	r.Run(":" + strconv.Itoa(config.ClientPort))
 }
 
 func Call(funcName string, res interface{}, req ...interface{}) error {
@@ -65,7 +67,7 @@ func Call(funcName string, res interface{}, req ...interface{}) error {
 		return fmt.Errorf("Acceptor Client Disabled")
 	}
 
-	var url string = "http://" + config.DSN + "/" + funcName + "?instance_id=" + config.InstanceId
+	var url string = "http://" + config.DSN + "/" + funcName + "?instance_id=" + config.InstanceId + "&port=" + strconv.Itoa(config.ClientPort)
 	var err error
 
 	// GET by default
