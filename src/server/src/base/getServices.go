@@ -9,9 +9,15 @@ import (
 	"github.com/linkit360/xmp-api/src/structs"
 )
 
-func GetServices(id_provider int) (map[string]xmp_api_structs.Service, error) {
-	var err error
-	out := make(map[string]xmp_api_structs.Service)
+func GetServices(id_provider int) (out map[string]xmp_api_structs.Service, err error) {
+	out = make(map[string]xmp_api_structs.Service)
+
+	defer func() {
+		if err != nil {
+			log.Errorln("SVC ERR: " + err.Error())
+		}
+	}()
+
 	data := make([]xmp_api_structs.Service, 0)
 
 	// Get services by provider id
@@ -27,26 +33,32 @@ func GetServices(id_provider int) (map[string]xmp_api_structs.Service, error) {
 		provOpts := xmp_api_structs.ProviderOpts{}
 		err = json.Unmarshal([]byte(service.ServiceOptsJson), &provOpts)
 		if err != nil {
-			return nil, err
+			return
 		}
 		service.ServiceOptsJson = ""
 
-		provOptsTmp, err := json.Marshal(provOpts)
+		var provOptsTmp []byte
+		provOptsTmp, err = json.Marshal(provOpts)
 		if err != nil {
-			return nil, err
+			return
 		}
+
+		log.Info("SVC 2.1: " + string(provOptsTmp))
 
 		err = json.Unmarshal(provOptsTmp, &service.ProviderOpts)
 		if err != nil {
-			return nil, err
+			return
 		}
 
 		// Content
 		contentIds := make([]string, 0)
 		err = json.Unmarshal([]byte(service.ContentIdsJson), &contentIds)
 		if err != nil {
-			return nil, err
+			return
 		}
+
+		log.Info("SVC 2.2: " + strconv.Itoa(len(contentIds)))
+
 		service.ContentIdsJson = ""
 		service.Contents = make([]xmp_api_structs.Content, 0)
 
@@ -57,7 +69,8 @@ func GetServices(id_provider int) (map[string]xmp_api_structs.Service, error) {
 		// Append to return
 		out[service.Id] = service
 	}
+
 	log.Info("SVC 4: " + strconv.Itoa(len(out)))
 
-	return out, nil
+	return
 }
