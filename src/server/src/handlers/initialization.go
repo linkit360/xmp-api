@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"strconv"
+
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/gin-gonic/gin.v1"
 
@@ -56,26 +58,26 @@ func Initialization(c *gin.Context) {
 				out.Error = "Operators: " + err.Error()
 			}
 		} else {
-			out.Error = "Instance status " + string(status)
+			out.Error = "Instance status " + strconv.Itoa(status)
 		}
 	} else {
 		out.Error = "Provider not found"
 	}
 
 	if out.Error != "" {
+		log.Error("INIT | Error: " + out.Error)
+
 		out.Campaigns = nil
 		out.Services = nil
 
 		out.Ok = false
 		out.Error = "Init: " + out.Error
-
-		log.Error("Initialization Error: " + out.Error)
 	} else {
-		log.Info("Initialization | iid: " + instance_id +
-			" | provider: " + string(id_provider) +
-			" | svc: " + string(len(out.Services)) +
-			" | camp: " + string(len(out.Campaigns)) +
-			" | ip: " + Clients[instance_id])
+		log.Info("INIT | IID: " + instance_id +
+			" | PROV: " + strconv.Itoa(id_provider) +
+			" | SVCs: " + strconv.Itoa(len(out.Services)) +
+			" | CAMPs: " + strconv.Itoa(len(out.Campaigns)) +
+			" | IP: " + Clients[instance_id])
 	}
 
 	c.JSON(
