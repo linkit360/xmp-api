@@ -2,7 +2,6 @@ package base
 
 import (
 	"encoding/json"
-	"strconv"
 
 	log "github.com/sirupsen/logrus"
 
@@ -21,16 +20,10 @@ func GetServices(id_provider int) (out map[string]xmp_api_structs.Service, err e
 	data := make([]xmp_api_structs.Service, 0)
 
 	// Get services by provider id
-	db.Debug().Where("status = 1 AND id_provider = ?", id_provider).Find(&data)
-
-	log.Info("SVC 1: " + strconv.Itoa(len(data)))
-
+	db.Where("status = 1 AND id_provider = ?", id_provider).Find(&data)
 	for _, service := range data {
-		log.Info("SVC 2: " + service.Id)
-		log.Info("SVC 2.0: " + service.ServiceOptsJson)
-
 		// Provider specific options
-		if service.ServiceOptsJson != "" {
+		if service.ServiceOptsJson != "" && service.ServiceOptsJson != "{}" && service.ServiceOptsJson != "[]" {
 			provOpts := xmp_api_structs.ProviderOpts{}
 			err = json.Unmarshal([]byte(service.ServiceOptsJson), &provOpts)
 			if err != nil {
@@ -43,8 +36,6 @@ func GetServices(id_provider int) (out map[string]xmp_api_structs.Service, err e
 			if err != nil {
 				return
 			}
-
-			log.Info("SVC 2.1: " + string(provOptsTmp))
 
 			err = json.Unmarshal(provOptsTmp, &service.ProviderOpts)
 			if err != nil {
@@ -59,20 +50,14 @@ func GetServices(id_provider int) (out map[string]xmp_api_structs.Service, err e
 			return
 		}
 
-		log.Info("SVC 2.2: " + strconv.Itoa(len(contentIds)))
-
 		service.ContentIdsJson = ""
 		service.Contents = make([]xmp_api_structs.Content, 0)
 
 		db.Where("status = 1 AND id IN (?)", contentIds).Find(&service.Contents)
 
-		log.Info("SVC 3: " + strconv.Itoa(len(service.Contents)))
-
 		// Append to return
 		out[service.Id] = service
 	}
-
-	log.Info("SVC 4: " + strconv.Itoa(len(out)))
 
 	return
 }
