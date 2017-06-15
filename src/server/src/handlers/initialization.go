@@ -64,21 +64,23 @@ func Initialization(c *gin.Context) {
 		out.Error = "Provider not found"
 	}
 
+	var logmsg string = "INIT | IID: " + instance_id +
+		" | PROV: " + strconv.Itoa(id_provider) +
+		" | SVCs: " + strconv.Itoa(len(out.Services)) +
+		" | CAMPs: " + strconv.Itoa(len(out.Campaigns)) +
+		" | IP: " + Clients[instance_id]
+
 	if out.Error != "" {
-		log.Error("INIT | Error: " + out.Error)
+		logmsg = logmsg + " | Error: " + out.Error
 
 		out.Campaigns = nil
 		out.Services = nil
 
 		out.Ok = false
 		out.Error = "Init: " + out.Error
-	} else {
-		log.Info("INIT | IID: " + instance_id +
-			" | PROV: " + strconv.Itoa(id_provider) +
-			" | SVCs: " + strconv.Itoa(len(out.Services)) +
-			" | CAMPs: " + strconv.Itoa(len(out.Campaigns)) +
-			" | IP: " + Clients[instance_id])
 	}
+
+	log.Info(logmsg)
 
 	c.JSON(
 		200,
