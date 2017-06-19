@@ -76,7 +76,9 @@ func testInitialization() {
 		},
 	).Info("Request Done")
 
-	//log.Info("TEST! ", resp.Campaigns["373bfcb3-f967-4860-96da-39637856f67b"].AutoClickRatio)
+	//log.Info("TEST! ", resp.Services)
+	//log.Info("TEST! ", resp.Services["c4bc3983-648c-45f9-a5b3-e1f6aa82db90"].Price)
+	//log.Info("TEST! ", resp.Services["c4bc3983-648c-45f9-a5b3-e1f6aa82db90"].PriceCents)
 	//fmt.Printf("%#v", resp.Operators)
 }
 

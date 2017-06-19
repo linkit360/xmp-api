@@ -43,6 +43,10 @@ func GetServices(id_provider int) (out map[string]xmp_api_structs.Service, err e
 			}
 		}
 
+		// Price
+		service.PriceCents = service.Price
+		service.Price = service.Price / 100
+
 		// Content
 		contentIds := make([]string, 0)
 		err = json.Unmarshal([]byte(service.ContentIdsJson), &contentIds)
