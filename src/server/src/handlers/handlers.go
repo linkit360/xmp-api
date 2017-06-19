@@ -20,7 +20,11 @@ func Send(instance_id string, payload []byte) {
 		Message string `json:"message,omitempty"`
 	}
 
-	Call("update", Clients[instance_id]+":50319", &resp, payload)
+	err := Call("update", Clients[instance_id], &resp, payload)
+	if err != nil {
+		log.Error("Send Error: ", resp.Message)
+		return
+	}
 
 	log.Debug("Send: ", resp.Message)
 }
