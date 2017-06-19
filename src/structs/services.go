@@ -5,7 +5,8 @@ type Service struct {
 	Code            string    `gorm:"column:id_service" json:"code"` // previous service id
 	Title           string    `json:"title"`                         //
 	Description     string    `json:"description,omitempty"`         //
-	Price           int       `json:"price"`                         // In cents
+	Price           int       `json:"price"`                         // Raw
+	PriceCents      int       `json:"price_cents"`                   // In cents
 	ContentIds      []string  `json:"content_ids,omitempty"`         // Unmarshalled content ids for use in content service (platform)
 	Contents        []Content `json:"contents,omitempty"`            // Contents of service, unmarshalled and ready for use in platform
 	ServiceOptsJson string    `gorm:"column:service_opts" json:"-"`  // taken from jsonb (database)
