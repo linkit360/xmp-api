@@ -18,8 +18,8 @@ func Initialization(c *gin.Context) {
 	out.Ok = true
 	out.Error = ""
 
-	if port == "0" {
-		out.Error = "Client Port: 0"
+	if port == "0" || port == "" {
+		out.Error = "Client Port: " + port
 	}
 
 	status, id_provider := base.GetOptions(instance_id)
