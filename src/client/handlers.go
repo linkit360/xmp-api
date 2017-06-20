@@ -19,10 +19,10 @@ type UpdateRequest struct {
 
 func GetRandomAggregate() xmp_api_structs.Aggregate {
 	return xmp_api_structs.Aggregate{
-		//InstanceId: "a7da1e9f-fcc1-4087-9c58-4d31bcdbd515", // qrtech
-		//InstanceId: "299a3335-6b05-4613-8fd9-0dbfb94db6ee", // cheese
-		//InstanceId: "32c30d00-bbf2-4aa1-b836-5a95f5c4fa44", // beeline
-		InstanceId: "58fbedf7-1abc-402b-8c2a-89fe256d32d9", // mobilink
+		//InstanceId: "", // qrtech
+		//InstanceId: "", // cheese
+		InstanceId: "967eda58-0e47-4bd4-8128-b30461eb9b19", // beeline
+		//InstanceId: "", // mobilink
 
 		ReportAt:               time.Now().UTC().Unix(),
 		CampaignCode:           "290",
