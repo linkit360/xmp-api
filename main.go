@@ -44,8 +44,8 @@ func runClient() {
 		DSN:        "go:50318",
 		ClientPort: 50319,
 		Timeout:    10,
-		InstanceId: "ecbe1211-3b1e-4c91-96fc-574dc979668a", // qrtech
-		//InstanceId: "58fbedf7-1abc-402b-8c2a-89fe256d32d9", // mobilink
+		//InstanceId: "ecbe1211-3b1e-4c91-96fc-574dc979668a", // qrtech
+		InstanceId: "967eda58-0e47-4bd4-8128-b30461eb9b19", // beeline
 	}
 
 	if err := xmp_api_client.Init(cfg); err != nil {
@@ -54,8 +54,8 @@ func runClient() {
 	log.Info("Ready")
 
 	testInitialization()
-	//testAggregate()
-	testUpdateRead()
+	testAggregate()
+	//testUpdateRead()
 }
 
 func testInitialization() {

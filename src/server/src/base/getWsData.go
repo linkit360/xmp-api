@@ -31,32 +31,48 @@ func GetWsData() (map[string]uint64, map[string]string, uint64, uint64, uint64) 
 		)
 	}
 
-	// map
+	// MAP
+	// Get countries id-iso mapping
+	var countr = make(map[int64]string)
+	rows, err = db.Raw("SELECT id,iso from xmp_countries;").Rows()
+	if err != nil {
+		log.Fatal(err)
+	}
+	var id int64
+	var iso string
+	for rows.Next() {
+		rows.Scan(
+			&id,
+			&iso,
+		)
+
+		countr[id] = iso
+	}
+
+	// Get id_country - id_instance mapping
 	rows, err = db.Raw(
-		"SELECT" +
-			"(SELECT i.id FROM xmp_instances AS i WHERE p.id = i.id_provider) AS instance_id, " +
-			"(SELECT c.iso FROM xmp_countries AS c WHERE c.id = p.id_country) AS country " +
-			"FROM " +
-			"xmp_providers AS p;",
+		"SELECT " +
+			"(SELECT p.id_country FROM xmp_providers AS p WHERE p.id = i.id_provider LIMIT 1) AS id_country, " +
+			"id as id_instance " +
+			"FROM xmp_instances AS i;",
 	).Rows()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	var iso string
-	var instance string
-
+	var id_country int64
+	var id_instance string
 	var provs = make(map[string]string)
 	for rows.Next() {
 		rows.Scan(
-			&instance,
-			&iso,
+			&id_country,
+			&id_instance,
 		)
 
-		provs[instance] = iso
+		provs[id_instance] = countr[id_country]
 	}
 
-	// TODO: providers by id_instance
+	// Get LP Hits by id_instance (for today)
 	rows, err = db.Raw(
 		"SELECT id_instance, SUM(lp_hits) " +
 			"FROM xmp_reports " +
@@ -78,6 +94,8 @@ func GetWsData() (map[string]uint64, map[string]string, uint64, uint64, uint64) 
 
 		if provs[prov] != "" {
 			countries[provs[prov]] = countries[provs[prov]] + sum
+		} else {
+			log.Error("Empty provs for: ", prov)
 		}
 	}
 
